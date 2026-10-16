@@ -2,14 +2,25 @@
   "manifest_version": 3,
   "name": "CodeFlow",
   "description": "Локальная библиотека C# и управляемая печать кода в AI Institute.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "minimum_chrome_version": "111",
-  "permissions": ["activeTab", "scripting", "storage"],
-  "host_permissions": ["https://ai-institute.tailcb3c56.ts.net/*"],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://ai-institute.tailcb3c56.ts.net/*"
+  ],
   "content_scripts": [
     {
-      "matches": ["https://ai-institute.tailcb3c56.ts.net/*"],
-      "js": ["codeflow/content/mini.js"],
+      "matches": [
+        "https://ai-institute.tailcb3c56.ts.net/*"
+      ],
+      "js": [
+        "codeflow/content/automation.js",
+        "codeflow/content/mini.js"
+      ],
       "run_at": "document_idle"
     }
   ],

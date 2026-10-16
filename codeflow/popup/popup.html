@@ -73,6 +73,7 @@
       <button class="primary-button" id="start" disabled>
         <span aria-hidden="true">▶</span> Начать печать
       </button>
+      <button class="primary-button" id="auto-start" style="margin-top: 8px; background: #087f68" disabled>▶ Авто: RUN → ИИ → следующее</button>
       <div class="secondary-actions">
         <button id="pause" disabled>
           <span aria-hidden="true">Ⅱ</span> <span id="pause-label">Пауза</span>
@@ -103,7 +104,7 @@
       </div>
       <footer>
         <span>CodeFlow <span class="footer-dot">·</span> C# Assistant</span
-        ><span>v1.1</span>
+        ><span>v1.2</span>
       </footer>
     </main>
     <dialog id="help-dialog" aria-labelledby="help-title">
@@ -134,7 +135,7 @@
         <li>Нажми на редактор и поставь курсор.</li>
         <li>Выбери лабораторную и номер задания в панели расширения или мини-панели сверху сайта.</li>
         <li>Нажми «Начать печать» или «Печать» в мини-панели.</li>
-        <li>После печати CodeFlow выберет следующий номер. Открой его страницу на сайте самостоятельно.</li>
+        <li>Для автоматического прохождения нажми «Авто»: CodeFlow напечатает код, запустит RUN, введёт данные, отправит на проверку ИИ и после принятия решения продолжит со следующего задания. «Стоп» прекращает автоматический режим.</li>
       </ol>
       <p class="dialog-note">
         Нет решения? Добавь C# код в TXT файл задания. При запуске весь старый

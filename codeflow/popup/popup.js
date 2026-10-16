@@ -4,10 +4,12 @@ const $ = (id) => document.getElementById(id);
 let library = {},
   settings = { labId: 1, taskId: 1, delay: 10 },
   session = { status: "idle", progress: 0 },
+  automatic = { status: "idle" },
   busy = true,
   ready = false,
   saveQueue = Promise.resolve();
-const active = () => ["typing", "paused"].includes(session.status);
+const autoActive = () => automatic.status === "active";
+const active = () => ["typing", "paused"].includes(session.status) || autoActive();
 const selected = () => library[keyOf(settings.labId, settings.taskId)];
 async function request(type, extra = {}) {
   const response = await chrome.runtime.sendMessage({ type, ...extra });
@@ -58,7 +60,9 @@ function render() {
     : "Решение пока отсутствует";
   $("lab").disabled = $("task").disabled = !ready || busy || active();
   $("start").disabled = !ready || busy || active() || !available;
-  $("pause").disabled = $("stop").disabled = busy || !active();
+  $("auto-start").disabled = !ready || busy || active();
+  $("stop").disabled = busy || !active();
+  $("pause").disabled = busy || autoActive() || !["typing", "paused"].includes(session.status);
   $("pause-label").textContent =
     session.status === "paused" ? "Продолжить" : "Пауза";
   document.querySelectorAll('input[name="speed"]').forEach((input) => {
@@ -68,7 +72,8 @@ function render() {
   $("library-count").textContent =
     `${Object.values(library).filter((task) => task.status === "available").length} / 71 решений`;
   $("progress-panel").hidden = !session.runId;
-  $("notice").hidden = active();
+  $("notice").hidden = active() && !autoActive();
+  if (autoActive()) notice(automatic.message);
   $("progress").value = session.progress || 0;
   $("progress-percent").textContent = `${session.progress || 0}%`;
   $("progress-label").textContent =
@@ -105,11 +110,16 @@ function applySession(value, announce = true) {
 }
 async function act(type) {
   if (busy) return;
+  const automaticAction = type === "AUTO_START" || (type === "STOP" && autoActive());
   busy = true;
   render();
   try {
     await saveQueue;
-    applySession(await request(type));
+    const value = await request(type);
+    if (automaticAction) {
+      automatic = value;
+      notice(value.message || "Авто остановлено.");
+    } else applySession(value);
   } catch (error) {
     notice(error.message, "error");
   } finally {
@@ -145,6 +155,7 @@ document.querySelectorAll('input[name="speed"]').forEach((input) =>
     persist();
   }),
 );
+$("auto-start").addEventListener("click", () => act("AUTO_START"));
 $("start").addEventListener("click", () => act("START"));
 $("pause").addEventListener("click", () =>
   act(session.status === "paused" ? "RESUME" : "PAUSE"),
@@ -172,6 +183,15 @@ document.querySelectorAll("dialog").forEach((dialog) =>
 );
 chrome.storage.onChanged.addListener((changes, area) => {
   if (area !== "local") return;
+  if (changes.autoSession?.newValue) {
+    automatic = changes.autoSession.newValue;
+    if (autoActive() && ready && library[keyOf(automatic.labId, automatic.taskId)]) {
+      settings = { ...settings, labId: automatic.labId, taskId: automatic.taskId };
+      taskOptions();
+    }
+    notice(automatic.message || "");
+    render();
+  }
   if (changes.typingSession?.newValue)
     applySession(changes.typingSession.newValue);
   if (changes.settings?.newValue && ready && !active()) {
@@ -184,11 +204,13 @@ async function init() {
   try {
     const [loaded, saved, status] = await Promise.all([
       loadLibrary(),
-      chrome.storage.local.get("settings"),
+      chrome.storage.local.get(["settings", "autoSession"]),
       request("STATUS"),
     ]);
     library = loaded;
-    const raw = saved.settings || {};
+    const current = await chrome.storage.local.get(["settings", "autoSession"]);
+    automatic = current.autoSession || automatic;
+    const raw = current.settings || {};
     settings = {
       labId: LABS.some((lab) => lab.id === raw.labId) ? raw.labId : 1,
       taskId: Number.isInteger(raw.taskId) && raw.taskId > 0 ? raw.taskId : 1,
@@ -199,7 +221,6 @@ async function init() {
     );
     taskOptions();
     ready = true;
-    await persist();
     applySession(status);
     if (status.status === "idle")
       notice(

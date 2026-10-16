@@ -1,4 +1,5 @@
 import { LABS, loadLibrary, keyOf } from "../lib/library.js";
+import { createAutopilot } from "../lib/autopilot.js";
 
 const ORIGIN = "https://ai-institute.tailcb3c56.ts.net";
 const extensionFile = (path) =>
@@ -11,14 +12,20 @@ async function showMiniOnOpenTabs() {
     .map((tab) => chrome.scripting.executeScript({
       target: { tabId: tab.id, frameIds: [0] },
       world: "ISOLATED",
-      files: [extensionFile("content/mini.js")],
+      files: [extensionFile("content/automation.js"), extensionFile("content/mini.js")],
     })));
 }
 chrome.runtime.onInstalled.addListener(() => {
-  showMiniOnOpenTabs().catch(() => {});
+  serial(async () => {
+    await autopilot.stop("Расширение перезапущено. Нажмите «Авто» для продолжения.");
+    await showMiniOnOpenTabs();
+  }).catch(() => {});
 });
 chrome.runtime.onStartup.addListener(() => {
-  showMiniOnOpenTabs().catch(() => {});
+  serial(async () => {
+    await autopilot.stop("Расширение перезапущено. Нажмите «Авто» для продолжения.");
+    await showMiniOnOpenTabs();
+  }).catch(() => {});
 });
 const nextTask = (labId, taskId) => {
   const lab = LABS.find((item) => item.id === labId);
@@ -108,7 +115,10 @@ async function reconcile() {
     message: "Страница закрыта или перезагружена. Откройте задание снова.",
   });
 }
-async function start(targetTab = null) {
+async function start(targetTab = null, automatic = false) {
+  if (!automatic && (await autopilot.get()).status === "active")
+    throw new Error("Сначала остановите автоматический режим.");
+  if (!automatic) await store.set({ autoSession: { status: "idle" } });
   const previous = await reconcile();
   if (isActive(previous))
     throw new Error("Печать уже запущена. Сначала остановите её.");
@@ -179,6 +189,8 @@ async function start(targetTab = null) {
   }
 }
 async function command(type) {
+  if (type === "STOP" && (await autopilot.get()).status === "active")
+    return autopilot.stop();
   const session = await reconcile();
   if (!isActive(session))
     throw new Error(session.message || "Нет активной печати.");
@@ -225,7 +237,7 @@ chrome.runtime.onMessage.addListener((message, sender, respond) => {
         message:
           typeof state.message === "string" ? state.message.slice(0, 300) : "",
       });
-      if (state.status === "completed") {
+      if (state.status === "completed" && (await autopilot.get()).status !== "active") {
         const next = nextTask(saved.labId, saved.taskId);
         if (next) {
           const { settings = {} } = await store.get("settings");
@@ -239,12 +251,17 @@ chrome.runtime.onMessage.addListener((message, sender, respond) => {
     sender.tab?.id &&
     sender.frameId === 0 &&
     sender.url?.startsWith(`${ORIGIN}/`) &&
-    ["MINI_STATUS", "MINI_SELECT", "MINI_SPEED", "MINI_START", "MINI_STOP"].includes(
+    ["MINI_STATUS", "MINI_SELECT", "MINI_SPEED", "MINI_START", "MINI_STOP", "AUTO_START", "AUTO_TICK"].includes(
       message?.type,
     )
   ) {
     serial(async () => {
       switch (message.type) {
+        case "AUTO_TICK":
+          await autopilot.tick(sender.tab.id);
+          return null;
+        case "AUTO_START":
+          return autopilot.start(sender.tab);
         case "MINI_STATUS":
           return reconcile();
         case "MINI_SELECT": {
@@ -252,7 +269,7 @@ chrome.runtime.onMessage.addListener((message, sender, respond) => {
           if (!lab || !Number.isInteger(message.taskId) ||
               message.taskId < 1 || message.taskId > lab.count)
             throw new Error("Неверный номер задания.");
-          if (isActive(await reconcile()))
+          if ((await autopilot.get()).status === "active" || isActive(await reconcile()))
             throw new Error("Сначала остановите текущую печать.");
           const { settings = {} } = await store.get("settings");
           const selected = { ...settings, labId: lab.id, taskId: message.taskId };
@@ -262,7 +279,7 @@ chrome.runtime.onMessage.addListener((message, sender, respond) => {
         case "MINI_SPEED": {
           if (![0, 10, 50, 100].includes(message.delay))
             throw new Error("Неверная скорость печати.");
-          if (isActive(await reconcile()))
+          if ((await autopilot.get()).status === "active" || isActive(await reconcile()))
             throw new Error("Сначала остановите текущую печать.");
           const { settings = {} } = await store.get("settings");
           const selected = { ...settings, delay: message.delay };
@@ -272,6 +289,11 @@ chrome.runtime.onMessage.addListener((message, sender, respond) => {
         case "MINI_START":
           return start(sender.tab);
         case "MINI_STOP": {
+          const automatic = await autopilot.get();
+          if (automatic.status === "active") {
+            if (automatic.tabId !== sender.tab.id) throw new Error("Авто запущено на другой вкладке.");
+            return autopilot.stop();
+          }
           const session = await reconcile();
           if (session.tabId !== sender.tab.id)
             throw new Error("Печать запущена на другой вкладке.");
@@ -292,6 +314,10 @@ chrome.runtime.onMessage.addListener((message, sender, respond) => {
         return reconcile();
       case "START":
         return start();
+      case "AUTO_START": {
+        const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+        return autopilot.start(tab);
+      }
       case "PAUSE":
       case "RESUME":
       case "STOP":
@@ -316,7 +342,12 @@ async function interrupted(tabId, message) {
 }
 chrome.tabs.onRemoved.addListener((tabId) => {
   serial(() =>
-    interrupted(tabId, "Страница закрыта. Печать остановлена."),
+    (async () => {
+      const automatic = await autopilot.get();
+      if (automatic.status === "active" && automatic.tabId === tabId)
+        await autopilot.stop("Вкладка закрыта. Авто остановлено.", "error");
+      await interrupted(tabId, "Страница закрыта. Печать остановлена.");
+    })(),
   ).catch(() => {});
 });
 chrome.tabs.onUpdated.addListener((tabId, change) => {
@@ -324,4 +355,34 @@ chrome.tabs.onUpdated.addListener((tabId, change) => {
     serial(() =>
       interrupted(tabId, "Страница перезагружена. Печать остановлена."),
     ).catch(() => {});
+});
+
+async function autoPage(tabId, method, payload) {
+  const result = await chrome.scripting.executeScript({
+    target: { tabId, frameIds: [0] }, world: "ISOLATED",
+    func: (method, payload) => {
+      if (!globalThis.__codeflowAutoPage) throw new Error("Обновите расширение и страницу задания.");
+      return globalThis.__codeflowAutoPage[method](payload);
+    }, args: [method, payload || null],
+  });
+  return result[0]?.result;
+}
+const autopilot = createAutopilot({
+  store,
+  inspect: (tabId) => autoPage(tabId, "inspect"),
+  action: (tabId, payload) => autoPage(tabId, "action", payload),
+  type: async (tabId, task) => {
+    const { settings = {} } = await store.get("settings");
+    await store.set({ settings: { ...settings, ...task } });
+    return start(await chrome.tabs.get(tabId), true);
+  },
+  typing: reconcile,
+  stopTyping: async (tabId) => {
+    const session = await getSession();
+    if (session.tabId === tabId && isActive(session)) {
+      const state = await engine(tabId, "stop");
+      if (state) await saveSession({ ...state, tabId });
+    }
+  },
+  navigate: (tabId, url) => chrome.tabs.update(tabId, { url }),
 });

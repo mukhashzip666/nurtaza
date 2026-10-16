@@ -37,6 +37,7 @@
       .actions { display: flex; gap: 8px; }
       .actions button { flex: 1; height: 36px; border-radius: 8px; border: 1px solid transparent; color: #fff; cursor: pointer; font: 600 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
       .run { background: #3b82f6; }
+      .auto { background: #087f68; }
       .stop { background: #273346; border-color: #40506a !important; }
       button:disabled, select:disabled { opacity: .48; cursor: default; }
       button:focus-visible, select:focus-visible { outline: 2px solid #9ac6ff; outline-offset: 2px; }
@@ -51,16 +52,17 @@
         </div>
         <label class="speed-label">Скорость<select class="speed" aria-label="Скорость печати"><option value="10">Очень быстро · 10 мс</option><option value="50">Обычно · 50 мс</option><option value="100">Медленно · 100 мс</option><option value="0">Мгновенно</option></select></label>
         <p class="status" role="status" aria-live="polite">Загрузка…</p>
-        <div class="actions"><button class="run" type="button">▶ Печать</button><button class="stop" type="button">■ Стоп</button></div>
+        <div class="actions"><button class="run" type="button">▶ Печать</button><button class="auto" type="button" title="Печать → RUN → ввод → проверка ИИ → следующее задание">▶ Авто</button><button class="stop" type="button">■ Стоп</button></div>
       </div>
     </aside>`;
   document.body.append(host);
 
   const $ = (selector) => root.querySelector(selector);
   const lab = $(".lab"), task = $(".task"), speed = $(".speed"), status = $(".status");
-  const run = $(".run"), stop = $(".stop");
+  const run = $(".run"), stop = $(".stop"), auto = $(".auto");
   let settings = { labId: 1, taskId: 1, delay: 10 };
   let session = { status: "idle" };
+  let automatic = { status: "idle" };
   let busy = false;
   let error = "";
   let lastFocused = null;
@@ -137,7 +139,7 @@
   }
 
   function render() {
-    const active = ["typing", "paused"].includes(session.status);
+    const active = ["typing", "paused"].includes(session.status) || automatic.status === "active";
     lab.value = String(settings.labId);
     const count = counts[settings.labId - 1] || 10;
     if (task.options.length !== count) {
@@ -146,9 +148,9 @@
     task.value = String(settings.taskId);
     speed.value = String([0, 10, 50, 100].includes(settings.delay) ? settings.delay : 10);
     lab.disabled = task.disabled = speed.disabled = busy || active;
-    run.disabled = busy || active;
+    run.disabled = auto.disabled = busy || active;
     stop.disabled = busy || !active;
-    status.textContent = error || (session.status === "typing"
+    status.textContent = error || (automatic.status === "active" || ["error", "stopped", "completed"].includes(automatic.status) ? automatic.message : "") || (session.status === "typing"
       ? `Печать: лаб. ${session.labId}, задание ${session.taskId} · ${session.progress || 0}%`
       : session.status === "paused"
         ? "Печать на паузе"
@@ -181,6 +183,7 @@
 
   async function act(type) {
     if (busy) return;
+    const automaticAction = type === "AUTO_START" || (type === "MINI_STOP" && automatic.status === "active");
     if (type === "MINI_START") {
       const current = pageTask();
       if (current && (current.taskId !== settings.taskId ||
@@ -198,7 +201,8 @@
       if (type === "MINI_START" && lastFocused?.isConnected && typeof lastFocused.focus === "function")
         lastFocused.focus();
       const response = await request(type);
-      if (!session.runId || session.runId !== response.runId ||
+      if (automaticAction) automatic = response;
+      else if (!session.runId || session.runId !== response.runId ||
           (response.revision || 0) >= (session.revision || 0))
         session = response;
     } catch (failure) {
@@ -209,6 +213,7 @@
     }
   }
   run.addEventListener("click", () => act("MINI_START"));
+  auto.addEventListener("click", () => act("AUTO_START"));
   stop.addEventListener("click", () => act("MINI_STOP"));
   $(".fold").addEventListener("click", () => {
     const collapsed = $(".card").classList.toggle("collapsed");
@@ -221,18 +226,20 @@
 
   chrome.storage.onChanged.addListener((changes, area) => {
     if (area !== "local") return;
+    if (changes.autoSession?.newValue) automatic = changes.autoSession.newValue;
     if (changes.settings?.newValue) settings = changes.settings.newValue;
     if (changes.typingSession?.newValue) session = changes.typingSession.newValue;
     if (changes.miniPosition?.newValue && !drag) {
       const { x, y } = changes.miniPosition.newValue;
       if (Number.isFinite(x) && Number.isFinite(y)) place(x, y);
     }
-    if (changes.settings || changes.typingSession) { error = ""; render(); }
+    if (changes.settings || changes.typingSession || changes.autoSession) { error = ""; render(); }
   });
 
-  Promise.all([chrome.storage.local.get(["settings", "typingSession", "miniPosition"]), request("MINI_STATUS")])
+  Promise.all([chrome.storage.local.get(["settings", "typingSession", "miniPosition", "autoSession"]), request("MINI_STATUS")])
     .then(([saved, current]) => {
       settings = saved.settings || settings;
+      automatic = saved.autoSession || automatic;
       session = current || saved.typingSession || session;
       render();
       if (saved.miniPosition && Number.isFinite(saved.miniPosition.x) &&

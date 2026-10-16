@@ -1,5 +1,6 @@
 import { cp, readFile } from "node:fs/promises";
 import { LABS, parseImport, MAX_CODE_LENGTH } from "../lib/library.js";
+import { RUN_INPUTS } from "../lib/run-inputs.js";
 const tasks = [];
 for (const lab of LABS) {
   const source = new URL(`../src/data/lab${lab.id}.json`, import.meta.url);
@@ -8,6 +9,9 @@ for (const lab of LABS) {
     throw new Error(`Неверное содержимое lab${lab.id}.json`);
   parseImport(group);
   for (let taskId = 1; taskId <= lab.count; taskId++) {
+    const inputs = RUN_INPUTS[`${lab.id}:${taskId}`];
+    if (!Array.isArray(inputs) || inputs.some((value) => typeof value !== "string" || /[\r\n]/.test(value)))
+      throw new Error(`Нет корректных входных данных для задания ${lab.id}:${taskId}.`);
     const code = await readFile(
       new URL(`../solutions/lab${lab.id}/task${taskId}.txt`, import.meta.url),
       "utf8",
