@@ -1,0 +1,29 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        int positive = 0;
+        int negative = 0;
+        int zero = 0;
+
+        for (int i = 0; i < 10; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+
+            if (numbers[i] > 0)
+                positive++;
+            else if (numbers[i] < 0)
+                negative++;
+            else
+                zero++;
+        }
+
+        Console.WriteLine("Positive: " + positive);
+        Console.WriteLine("Negative: " + negative);
+        Console.WriteLine("Zero: " + zero);
+    }
+}

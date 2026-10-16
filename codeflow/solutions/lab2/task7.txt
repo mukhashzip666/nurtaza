@@ -1,0 +1,8 @@
+using System;
+
+class Program {
+    static void Main() {
+        double n = double.Parse(Console.ReadLine());
+        Console.WriteLine($"{n * n} {n * n * n} {Math.Sqrt(n)}");
+    }
+}

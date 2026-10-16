@@ -1,0 +1,21 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter units used: ");
+        double units = double.Parse(Console.ReadLine());
+
+        double cost;
+
+        if (units <= 100)
+            cost = units * 0.5;
+        else if (units <= 300)
+            cost = 100 * 0.5 + (units - 100) * 0.75;
+        else
+            cost = 100 * 0.5 + 200 * 0.75 + (units - 300) * 1.20;
+
+        Console.WriteLine("Total cost: " + cost);
+    }
+}

@@ -1,0 +1,12 @@
+using System;
+
+class Program {
+    static void Main() {
+        int a = 5;
+        double b = 3.14;
+        char c = 'A';
+        string s = "Hello";
+        bool d = true;
+        Console.WriteLine($"{a} {b} {c} {s} {d}");
+    }
+}

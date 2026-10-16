@@ -1,0 +1,9 @@
+using System;
+
+class Program {
+    static void Main() {
+        string s = "123.45";
+        double d = Convert.ToDouble(s);
+        Console.WriteLine(d * 2);
+    }
+}

@@ -1,0 +1,17 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string correctPassword = "12345";
+
+        Console.Write("Enter password: ");
+        string password = Console.ReadLine();
+
+        if (password == correctPassword)
+            Console.WriteLine("Access Granted");
+        else
+            Console.WriteLine("Access Denied");
+    }
+}

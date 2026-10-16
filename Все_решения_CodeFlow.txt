@@ -1,0 +1,1688 @@
+CodeFlow — все решения C#
+Лабораторные работы 1–5, задания 1–71
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №1
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.WriteLine("Hello, World! Welcome to C#");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №2
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Введите ваше имя: ");
+        string name = Console.ReadLine();
+
+        Console.WriteLine("Hello, " + name + "! Nice to meet you.");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №3
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter your name: ");
+        string name = Console.ReadLine();
+
+        Console.Write("Enter your age: ");
+        int age = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine($"Your name is {name} and you are {age} years old.");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №4
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int a = Convert.ToInt32(Console.ReadLine());
+        int b = Convert.ToInt32(Console.ReadLine());
+
+        Console.WriteLine(a + b);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №5
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double a = Convert.ToDouble(Console.ReadLine());
+        double b = Convert.ToDouble(Console.ReadLine());
+
+        Console.WriteLine("Қосындысы: " + (a + b));
+        Console.WriteLine("Айырмасы: " + (a - b));
+        Console.WriteLine("Көбейтіндісі: " + (a * b));
+
+        if (b != 0)
+        {
+            Console.WriteLine("Бөліндісі: " + (a / b));
+        }
+        else
+        {
+            Console.WriteLine("Нөлге бөлуге болмайды!");
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №6
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int a = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine(a * a);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №7
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        
+        double a = Convert.ToDouble(Console.ReadLine());
+        double b = Convert.ToDouble(Console.ReadLine());
+        double c = Convert.ToDouble(Console.ReadLine());
+
+      
+        double average = (a + b + c) / 3;
+
+        //мен котергенде прям кушти проект болар еди
+        Console.WriteLine(average);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №8
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double c = Convert.ToDouble(Console.ReadLine());
+        double f = c * 9 / 5 + 32;
+        Console.WriteLine(f);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №9
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double a = Convert.ToDouble(Console.ReadLine());
+        double b = Convert.ToDouble(Console.ReadLine());
+
+        Console.WriteLine(a * b);
+        Console.WriteLine(2 * (a + b));
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №10
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double a = double.Parse(Console.ReadLine());
+        double b = double.Parse(Console.ReadLine());
+        string op = Console.ReadLine();
+
+        switch (op)
+        {
+            case "+":
+                Console.WriteLine(a + b);
+                break;
+            case "-":
+                Console.WriteLine(a - b);
+                break;
+            case "*":
+                Console.WriteLine(a * b);
+                break;
+            case "/":
+                if (b != 0)
+                    Console.WriteLine(a / b);
+                else
+                    Console.WriteLine("Нөлге бөлуге болмайды!");
+                break;
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №1
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        int a = 5;
+        double b = 3.14;
+        char c = 'A';
+        string s = "Hello";
+        bool d = true;
+        Console.WriteLine($"{a} {b} {c} {s} {d}");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №2
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        string name = "Ulan";
+        int age = 18;
+        double gpa = 3.2;
+        Console.WriteLine($"Name: {name}, Age: {age}, GPA: {gpa}");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №3
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        int i = int.Parse(Console.ReadLine());
+        double d = double.Parse(Console.ReadLine());
+        char ch = Console.ReadKey().KeyChar;
+        Console.WriteLine();
+        Console.WriteLine($"{i} ({i.GetType()}), {d} ({d.GetType()}), {ch} ({ch.GetType()})");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №4
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        int x = int.Parse(Console.ReadLine());
+        int y = int.Parse(Console.ReadLine());
+        Console.WriteLine($"{x + y} {x - y} {x * y} {(double)x / y}");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №5
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        double a = double.Parse(Console.ReadLine());
+        double b = double.Parse(Console.ReadLine());
+        double c = double.Parse(Console.ReadLine());
+        double d = double.Parse(Console.ReadLine());
+        double e = double.Parse(Console.ReadLine());
+        Console.WriteLine((a + b + c + d + e) / 5);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №6
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        int n = int.Parse(Console.ReadLine());
+        Console.WriteLine($"{n % 2} {n % 3} {n % 5}");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №7
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        double n = double.Parse(Console.ReadLine());
+        Console.WriteLine($"{n * n} {n * n * n} {Math.Sqrt(n)}");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №8
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        bool a = Convert.ToBoolean(int.Parse(Console.ReadLine()));
+        bool b = Convert.ToBoolean(int.Parse(Console.ReadLine()));
+        Console.WriteLine($"{a && b} {a || b} {a ^ b} {!a}");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №9
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        int a = 10;
+        double b = a;
+        Console.WriteLine(b);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №10
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        double a = 9.7;
+        int b = (int)a;
+        Console.WriteLine(b);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №11
+====================================================================
+using System;
+
+class Program {
+    static void Main() {
+        string s = "123.45";
+        double d = Convert.ToDouble(s);
+        Console.WriteLine(d * 2);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №1
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter age: ");
+        int age=int.Parse(Console.ReadLine());
+        if (age>=18)
+        Console.WriteLine("You can get a driving license");
+        else
+        Console.WriteLine("You cannot get a driving license");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №2
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter an integer");
+        int number=int.Parse(Console.ReadLine());
+        if (number%2==0)
+            Console.WriteLine("Even");
+        else
+            Console.WriteLine("Odd");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №3
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter temperature");
+        double temperature=double.Parse(Console.ReadLine());
+        if (temperature<0)
+            Console.WriteLine("Freezing Weather");
+        else
+            Console.WriteLine("Normal");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №4
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter age: ");
+        int age=int.Parse(Console.ReadLine());
+        if (age<12 || age>60)
+            Console.WriteLine("Discount applied");
+        else
+            Console.WriteLine("Full price");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №5
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter a number");
+        double number=double.Parse(Console.ReadLine());
+        if (number>0)
+            Console.WriteLine("Positive");
+        else if (number<0)
+            Console.WriteLine("Negative");
+        else
+            Console.WriteLine("Zero");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №6
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter menu choice (1-4):");
+        int choice=int.Parse(Console.ReadLine());
+        switch (choice)
+        {
+            case 1:
+                Console.WriteLine("Pizza-$10");
+                break;
+            case 2:
+                Console.WriteLine("Burger-$8");
+                break;
+            case 3:
+                Console.WriteLine("Pasta-$9");
+                break;
+            case 4:
+                Console.WriteLine("Salad-$6");
+                break;
+            default:
+                Console.WriteLine("Invalid choice");
+                break;       
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №7
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter a number from 1 to 7: ");
+        int day = int.Parse(Console.ReadLine());
+
+        switch (day)
+        {
+            case 1: Console.WriteLine("Monday"); break;
+            case 2: Console.WriteLine("Tuesday"); break;
+            case 3: Console.WriteLine("Wednesday"); break;
+            case 4: Console.WriteLine("Thursday"); break;
+            case 5: Console.WriteLine("Friday"); break;
+            case 6: Console.WriteLine("Saturday"); break;
+            case 7: Console.WriteLine("Sunday"); break;
+            default: Console.WriteLine("Invalid day"); break;
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №8
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter light color: ");
+        string color = Console.ReadLine();
+
+        switch (color.ToLower())
+        {
+            case "red":
+                Console.WriteLine("Stop");
+                break;
+            case "yellow":
+                Console.WriteLine("Wait");
+                break;
+            case "green":
+                Console.WriteLine("Go");
+                break;
+            default:
+                Console.WriteLine("Invalid color");
+                break;
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №9
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter usage in GB: ");
+        double usage = double.Parse(Console.ReadLine());
+
+        if (usage < 5)
+            Console.WriteLine("Basic Plan");
+        else if (usage <= 15)
+            Console.WriteLine("Standard Plan");
+        else
+            Console.WriteLine("Premium Plan");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №10
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter units used: ");
+        double units = double.Parse(Console.ReadLine());
+
+        double cost;
+
+        if (units <= 100)
+            cost = units * 0.5;
+        else if (units <= 300)
+            cost = 100 * 0.5 + (units - 100) * 0.75;
+        else
+            cost = 100 * 0.5 + 200 * 0.75 + (units - 300) * 1.20;
+
+        Console.WriteLine("Total cost: " + cost);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №11
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter marks: ");
+        int marks = int.Parse(Console.ReadLine());
+
+        if (marks >= 90 && marks <= 100)
+            Console.WriteLine("A");
+        else if (marks >= 75)
+            Console.WriteLine("B");
+        else if (marks >= 50)
+            Console.WriteLine("C");
+        else
+            Console.WriteLine("Fail");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №12
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string correctPassword = "12345";
+
+        Console.Write("Enter password: ");
+        string password = Console.ReadLine();
+
+        if (password == correctPassword)
+            Console.WriteLine("Access Granted");
+        else
+            Console.WriteLine("Access Denied");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №13
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string correctUsername = "admin";
+        string correctPassword = "12345";
+
+        Console.Write("Enter username: ");
+        string username = Console.ReadLine();
+
+        Console.Write("Enter password: ");
+        string password = Console.ReadLine();
+
+        if (username == correctUsername && password == correctPassword)
+            Console.WriteLine("Login successful");
+        else
+            Console.WriteLine("Error");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №14
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int pin = 1234;
+        int input = int.Parse(Console.ReadLine());
+
+        if (input == pin)
+        {
+            Console.WriteLine("Снятие денег разрешено");
+        }
+        else
+        {
+            Console.WriteLine("Неверный PIN-код. Доступ запрещён");
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №15
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter weigh (kg):");
+        double weigh=double.Parse(Console.ReadLine());
+        Console.Write("Enter height (m):");
+        double height=double.Parse(Console.ReadLine());
+        double bmi=weigh/(height*height);
+        Console.WriteLine("BMI: " + bmi.ToString("F2"));
+        if (bmi < 18.5)
+            Console.WriteLine("Underweight");
+        else if (bmi<25)
+            Console.WriteLine("Normal");
+        else
+            Console.WriteLine("Overweight");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №16
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter first number: ");
+        double a = double.Parse(Console.ReadLine());
+
+        Console.Write("Enter second number: ");
+        double b = double.Parse(Console.ReadLine());
+
+        Console.Write("Enter operator: ");
+        string op = Console.ReadLine();
+
+        switch (op)
+        {
+            case "+":
+                Console.WriteLine(a + b);
+                break;
+
+            case "-":
+                Console.WriteLine(a - b);
+                break;
+
+            case "*":
+                Console.WriteLine(a * b);
+                break;
+
+            case "/":
+                if (b != 0)
+                    Console.WriteLine(a / b);
+                else
+                    Console.WriteLine("Cannot divide by zero");
+                break;
+
+            default:
+                Console.WriteLine("Invalid operator");
+                break;
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №17
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter cart total: ");
+        double total = double.Parse(Console.ReadLine());
+
+        double discount;
+
+        if (total > 100)
+            discount = 20;
+        else if (total > 50)
+            discount = 10;
+        else
+            discount = 0;
+
+        double finalPrice = total - total * discount / 100;
+
+        Console.WriteLine("Discount: " + discount + "%");
+        Console.WriteLine("Final price: " + finalPrice);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №18
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter total classes: ");
+        int totalClasses = int.Parse(Console.ReadLine());
+
+        Console.Write("Enter attended classes: ");
+        int attendedClasses = int.Parse(Console.ReadLine());
+
+        double attendance = (double)attendedClasses / totalClasses * 100;
+
+        if (attendance >= 75)
+            Console.WriteLine("Eligible");
+        else
+            Console.WriteLine("Not eligible");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №19
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter seat category: ");
+        string category = Console.ReadLine();
+
+        switch (category.ToLower())
+        {
+            case "vip":
+                Console.WriteLine("Price: 100");
+                break;
+
+            case "standard":
+                Console.WriteLine("Price: 60");
+                break;
+
+            case "economy":
+                Console.WriteLine("Price: 30");
+                break;
+
+            default:
+                Console.WriteLine("Invalid category");
+                break;
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №20
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter number of days: ");
+        int days = int.Parse(Console.ReadLine());
+
+        Console.Write("Enter normal price: ");
+        double price = double.Parse(Console.ReadLine());
+
+        double discount;
+
+        if (days <= 3)
+            discount = 0;
+        else if (days <= 7)
+            discount = 10;
+        else
+            discount = 20;
+
+        double finalPrice = price - price * discount / 100;
+
+        Console.WriteLine("Discount: " + discount + "%");
+        Console.WriteLine("Final price: " + finalPrice);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №1
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        for(int i=1; i<=20; i++)
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №2
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        for(int i=2; i<=50; i+=2)
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №3
+====================================================================
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter n:");
+        int n=int.Parse(Console.ReadLine());
+        int sum=0;
+        for (int i=1; i<=n; i++)
+        {
+            sum +=i;
+        }
+        Console.WriteLine(sum);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №4
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter x: ");
+        int x = int.Parse(Console.ReadLine());
+
+        for (int i = 1; i <= 10; i++)
+        {
+            Console.WriteLine(x + " * " + i + " = " + x * i);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №5
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter n: ");
+        int n = int.Parse(Console.ReadLine());
+
+        int factorial = 1;
+
+        for (int i = 1; i <= n; i++)
+        {
+            factorial *= i;
+        }
+
+        Console.WriteLine(factorial);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №6
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter n: ");
+        int n = int.Parse(Console.ReadLine());
+
+        for (int i = n; i >= 1; i--)
+        {
+            Console.WriteLine(i);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №7
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter number: ");
+        int n = int.Parse(Console.ReadLine());
+
+        int sum = 0;
+
+        while (n > 0)
+        {
+            sum += n % 10;
+            n /= 10;
+        }
+
+        Console.WriteLine(sum);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №8
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter number: ");
+        int n = int.Parse(Console.ReadLine());
+
+        int count = 0;
+
+        while (n > 0)
+        {
+            n /= 10;
+            count++;
+        }
+
+        Console.WriteLine(count);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №9
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[5];
+
+        for (int i = 0; i < 5; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        for (int i = 4; i >= 0; i--)
+        {
+            Console.WriteLine(numbers[i]);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №10
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        int positive = 0;
+        int negative = 0;
+        int zero = 0;
+
+        for (int i = 0; i < 10; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+
+            if (numbers[i] > 0)
+                positive++;
+            else if (numbers[i] < 0)
+                negative++;
+            else
+                zero++;
+        }
+
+        Console.WriteLine("Positive: " + positive);
+        Console.WriteLine("Negative: " + negative);
+        Console.WriteLine("Zero: " + zero);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №11
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter n: ");
+        int n = int.Parse(Console.ReadLine());
+
+        int a = 0;
+        int b = 1;
+
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write(a + " ");
+
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №12
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter number: ");
+        int n = int.Parse(Console.ReadLine());
+
+        bool prime = true;
+
+        if (n < 2)
+        {
+            prime = false;
+        }
+
+        for (int i = 2; i < n; i++)
+        {
+            if (n % i == 0)
+            {
+                prime = false;
+                break;
+            }
+        }
+
+        if (prime)
+            Console.WriteLine("Prime");
+        else
+            Console.WriteLine("Not prime");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №13
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        for (int i = 1; i <= 10; i++)
+        {
+            for (int j = 1; j <= 10; j++)
+            {
+                Console.Write(i * j + "\t");
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №14
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[,] a = new int[3, 3];
+        int sum = 0;
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                a[i, j] = int.Parse(Console.ReadLine());
+                sum += a[i, j];
+            }
+        }
+
+        Console.WriteLine(sum);
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №15
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[,] a = new int[3, 3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                a[i, j] = int.Parse(Console.ReadLine());
+            }
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            int sum = 0;
+            for (int j = 0; j < 3; j++)
+            {
+                sum += a[i, j];
+            }
+            Console.WriteLine(sum);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №16
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= i; j++)
+            {
+                Console.Write("*");
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №17
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        for (int i = 1; i <= n; i++)
+        {
+            for (int j = 1; j <= i; j++)
+            {
+                Console.Write(j);
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №18
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        for (int i = n; i >= 1; i--)
+        {
+            for (int j = 1; j <= i; j++)
+            {
+                Console.Write("*");
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №19
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[,] a = new int[3, 3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                a[i, j] = int.Parse(Console.ReadLine());
+            }
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            Console.Write(a[i, i] + " ");
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №20
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[,] a = new int[3, 3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                a[i, j] = int.Parse(Console.ReadLine());
+            }
+        }
+
+        int sum = 0;
+        for (int j = 0; j < 3; j++)
+        {
+            sum += a[0, j];
+        }
+
+        bool magic = true;
+
+        // Проверка строк
+        for (int i = 0; i < 3; i++)
+        {
+            int s = 0;
+            for (int j = 0; j < 3; j++)
+            {
+                s += a[i, j];
+            }
+            if (s != sum)
+                magic = false;
+        }
+
+        // Проверка столбцов
+        for (int j = 0; j < 3; j++)
+        {
+            int s = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                s += a[i, j];
+            }
+            if (s != sum)
+                magic = false;
+        }
+
+        // Проверка диагоналей
+        int d1 = 0;
+        int d2 = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            d1 += a[i, i];
+            d2 += a[i, 2 - i];
+        }
+
+        if (d1 != sum || d2 != sum)
+        {
+            magic = false;
+        }
+
+        if (magic)
+            Console.WriteLine("Magic square");
+        else
+            Console.WriteLine("Not a magic square");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №1
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            Console.WriteLine(numbers[i]);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №2
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        int maxIndex = 0;
+        int minIndex = 0;
+
+        for (int i = 1; i < numbers.Length; i++)
+        {
+            if (numbers[i] > numbers[maxIndex])
+            {
+                maxIndex = i;
+            }
+            if (numbers[i] < numbers[minIndex])
+            {
+                minIndex = i;
+            }
+        }
+
+        Console.WriteLine($"Ең үлкен мән: {numbers[maxIndex]}, индексі: {maxIndex}");
+        Console.WriteLine($"Ең кіші мән: {numbers[minIndex]}, индексі: {minIndex}");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №3
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = { 5, 2, 9, 1, 7, 3 };
+
+        for (int i = 0; i < numbers.Length - 1; i++)
+        {
+            for (int j = 0; j < numbers.Length - 1 - i; j++)
+            {
+                if (numbers[j] > numbers[j + 1])
+                {
+                    int temp = numbers[j];
+                    numbers[j] = numbers[j + 1];
+                    numbers[j + 1] = temp;
+                }
+            }
+        }
+
+        Console.WriteLine(string.Join(" ", numbers));
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №4
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+        int sum = 0;
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+            sum += numbers[i];
+        }
+
+        double average = (double)sum / numbers.Length;
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            if (numbers[i] > average)
+            {
+                Console.WriteLine(numbers[i]);
+            }
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №5
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        int maxIndex = 0;
+        int minIndex = 0;
+
+        for (int i = 1; i < numbers.Length; i++)
+        {
+            if (numbers[i] > numbers[maxIndex])
+            {
+                maxIndex = i;
+            }
+            if (numbers[i] < numbers[minIndex])
+            {
+                minIndex = i;
+            }
+        }
+
+        int temp = numbers[maxIndex];
+        numbers[maxIndex] = numbers[minIndex];
+        numbers[minIndex] = temp;
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            Console.WriteLine(numbers[i]);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №6
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+        int evenCount = 0;
+        int oddCount = 0;
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+            
+            if (numbers[i] % 2 == 0)
+            {
+                evenCount++;
+            }
+            else
+            {
+                oddCount++;
+            }
+        }
+
+        Console.WriteLine($"Жұп сандар саны: {evenCount}");
+        Console.WriteLine($"Тақ сандар саны: {oddCount}");
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №7
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        int left = 0;
+        int right = numbers.Length - 1;
+
+        while (left < right)
+        {
+            int temp = numbers[left];
+            numbers[left] = numbers[right];
+            numbers[right] = temp;
+            left++;
+            right--;
+        }
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            Console.WriteLine(numbers[i]);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №8
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        int target = int.Parse(Console.ReadLine());
+        int index = -1;
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            if (numbers[i] == target)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        if (index != -1)
+        {
+            Console.WriteLine($"Found it at index {index}!");
+        }
+        else
+        {
+            Console.WriteLine("Not here!");
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №9
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        int[] sums = new int[numbers.Length - 1];
+
+        for (int i = 0; i < sums.Length; i++)
+        {
+            sums[i] = numbers[i] + numbers[i + 1];
+        }
+
+        for (int i = 0; i < sums.Length; i++)
+        {
+            Console.WriteLine(sums[i]);
+        }
+    }
+}
+
+====================================================================
+ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №10
+====================================================================
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        for (int i = 0; i < numbers.Length - 1; i++)
+        {
+            for (int j = 0; j < numbers.Length - 1 - i; j++)
+            {
+                if (numbers[j] < numbers[j + 1])
+                {
+                    int temp = numbers[j];
+                    numbers[j] = numbers[j + 1];
+                    numbers[j + 1] = temp;
+                }
+            }
+        }
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            Console.WriteLine(numbers[i]);
+        }
+    }
+}

@@ -1,0 +1,19 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter marks: ");
+        int marks = int.Parse(Console.ReadLine());
+
+        if (marks >= 90 && marks <= 100)
+            Console.WriteLine("A");
+        else if (marks >= 75)
+            Console.WriteLine("B");
+        else if (marks >= 50)
+            Console.WriteLine("C");
+        else
+            Console.WriteLine("Fail");
+    }
+}

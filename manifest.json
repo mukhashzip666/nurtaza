@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "CodeFlow",
+  "description": "Локальная библиотека C# и управляемая печать кода в AI Institute.",
+  "version": "1.1.0",
+  "minimum_chrome_version": "111",
+  "permissions": ["activeTab", "scripting", "storage"],
+  "host_permissions": ["https://ai-institute.tailcb3c56.ts.net/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://ai-institute.tailcb3c56.ts.net/*"],
+      "js": ["codeflow/content/mini.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "CodeFlow — Smart Code Typing",
+    "default_popup": "codeflow/popup/popup.html",
+    "default_icon": {
+      "16": "codeflow/assets/icon16.png",
+      "48": "codeflow/assets/icon48.png",
+      "128": "codeflow/assets/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "codeflow/assets/icon16.png",
+    "48": "codeflow/assets/icon48.png",
+    "128": "codeflow/assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "codeflow/background/background.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

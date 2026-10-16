@@ -1,0 +1,19 @@
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter weigh (kg):");
+        double weigh=double.Parse(Console.ReadLine());
+        Console.Write("Enter height (m):");
+        double height=double.Parse(Console.ReadLine());
+        double bmi=weigh/(height*height);
+        Console.WriteLine("BMI: " + bmi.ToString("F2"));
+        if (bmi < 18.5)
+            Console.WriteLine("Underweight");
+        else if (bmi<25)
+            Console.WriteLine("Normal");
+        else
+            Console.WriteLine("Overweight");
+    }
+}

@@ -1,0 +1,20 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter total classes: ");
+        int totalClasses = int.Parse(Console.ReadLine());
+
+        Console.Write("Enter attended classes: ");
+        int attendedClasses = int.Parse(Console.ReadLine());
+
+        double attendance = (double)attendedClasses / totalClasses * 100;
+
+        if (attendance >= 75)
+            Console.WriteLine("Eligible");
+        else
+            Console.WriteLine("Not eligible");
+    }
+}

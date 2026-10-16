@@ -1,0 +1,17 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter usage in GB: ");
+        double usage = double.Parse(Console.ReadLine());
+
+        if (usage < 5)
+            Console.WriteLine("Basic Plan");
+        else if (usage <= 15)
+            Console.WriteLine("Standard Plan");
+        else
+            Console.WriteLine("Premium Plan");
+    }
+}

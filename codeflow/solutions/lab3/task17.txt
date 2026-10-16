@@ -1,0 +1,24 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter cart total: ");
+        double total = double.Parse(Console.ReadLine());
+
+        double discount;
+
+        if (total > 100)
+            discount = 20;
+        else if (total > 50)
+            discount = 10;
+        else
+            discount = 0;
+
+        double finalPrice = total - total * discount / 100;
+
+        Console.WriteLine("Discount: " + discount + "%");
+        Console.WriteLine("Final price: " + finalPrice);
+    }
+}

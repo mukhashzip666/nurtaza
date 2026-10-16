@@ -1,0 +1,26 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        int[] sums = new int[numbers.Length - 1];
+
+        for (int i = 0; i < sums.Length; i++)
+        {
+            sums[i] = numbers[i] + numbers[i + 1];
+        }
+
+        for (int i = 0; i < sums.Length; i++)
+        {
+            Console.WriteLine(sums[i]);
+        }
+    }
+}

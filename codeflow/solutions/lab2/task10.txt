@@ -1,0 +1,9 @@
+using System;
+
+class Program {
+    static void Main() {
+        double a = 9.7;
+        int b = (int)a;
+        Console.WriteLine(b);
+    }
+}

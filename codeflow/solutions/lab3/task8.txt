@@ -1,0 +1,26 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter light color: ");
+        string color = Console.ReadLine();
+
+        switch (color.ToLower())
+        {
+            case "red":
+                Console.WriteLine("Stop");
+                break;
+            case "yellow":
+                Console.WriteLine("Wait");
+                break;
+            case "green":
+                Console.WriteLine("Go");
+                break;
+            default:
+                Console.WriteLine("Invalid color");
+                break;
+        }
+    }
+}

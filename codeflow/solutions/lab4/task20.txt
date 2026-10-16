@@ -1,0 +1,68 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[,] a = new int[3, 3];
+
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                a[i, j] = int.Parse(Console.ReadLine());
+            }
+        }
+
+        int sum = 0;
+        for (int j = 0; j < 3; j++)
+        {
+            sum += a[0, j];
+        }
+
+        bool magic = true;
+
+        // Проверка строк
+        for (int i = 0; i < 3; i++)
+        {
+            int s = 0;
+            for (int j = 0; j < 3; j++)
+            {
+                s += a[i, j];
+            }
+            if (s != sum)
+                magic = false;
+        }
+
+        // Проверка столбцов
+        for (int j = 0; j < 3; j++)
+        {
+            int s = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                s += a[i, j];
+            }
+            if (s != sum)
+                magic = false;
+        }
+
+        // Проверка диагоналей
+        int d1 = 0;
+        int d2 = 0;
+        for (int i = 0; i < 3; i++)
+        {
+            d1 += a[i, i];
+            d2 += a[i, 2 - i];
+        }
+
+        if (d1 != sum || d2 != sum)
+        {
+            magic = false;
+        }
+
+        if (magic)
+            Console.WriteLine("Magic square");
+        else
+            Console.WriteLine("Not a magic square");
+    }
+}

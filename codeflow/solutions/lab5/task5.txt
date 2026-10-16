@@ -1,0 +1,38 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+        }
+
+        int maxIndex = 0;
+        int minIndex = 0;
+
+        for (int i = 1; i < numbers.Length; i++)
+        {
+            if (numbers[i] > numbers[maxIndex])
+            {
+                maxIndex = i;
+            }
+            if (numbers[i] < numbers[minIndex])
+            {
+                minIndex = i;
+            }
+        }
+
+        int temp = numbers[maxIndex];
+        numbers[maxIndex] = numbers[minIndex];
+        numbers[minIndex] = temp;
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            Console.WriteLine(numbers[i]);
+        }
+    }
+}

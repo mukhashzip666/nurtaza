@@ -1,0 +1,29 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter seat category: ");
+        string category = Console.ReadLine();
+
+        switch (category.ToLower())
+        {
+            case "vip":
+                Console.WriteLine("Price: 100");
+                break;
+
+            case "standard":
+                Console.WriteLine("Price: 60");
+                break;
+
+            case "economy":
+                Console.WriteLine("Price: 30");
+                break;
+
+            default:
+                Console.WriteLine("Invalid category");
+                break;
+        }
+    }
+}

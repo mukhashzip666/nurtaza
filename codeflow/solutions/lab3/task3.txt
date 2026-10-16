@@ -1,0 +1,13 @@
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter temperature");
+        double temperature=double.Parse(Console.ReadLine());
+        if (temperature<0)
+            Console.WriteLine("Freezing Weather");
+        else
+            Console.WriteLine("Normal");
+    }
+}

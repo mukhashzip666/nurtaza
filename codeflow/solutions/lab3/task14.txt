@@ -1,0 +1,19 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int pin = 1234;
+        int input = int.Parse(Console.ReadLine());
+
+        if (input == pin)
+        {
+            Console.WriteLine("Снятие денег разрешено");
+        }
+        else
+        {
+            Console.WriteLine("Неверный PIN-код. Доступ запрещён");
+        }
+    }
+}

@@ -1,0 +1,13 @@
+using System;
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter age: ");
+        int age=int.Parse(Console.ReadLine());
+        if (age>=18)
+        Console.WriteLine("You can get a driving license");
+        else
+        Console.WriteLine("You cannot get a driving license");
+    }
+}

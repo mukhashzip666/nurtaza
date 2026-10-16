@@ -1,0 +1,28 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        int[] numbers = new int[10];
+        int evenCount = 0;
+        int oddCount = 0;
+
+        for (int i = 0; i < numbers.Length; i++)
+        {
+            numbers[i] = int.Parse(Console.ReadLine());
+            
+            if (numbers[i] % 2 == 0)
+            {
+                evenCount++;
+            }
+            else
+            {
+                oddCount++;
+            }
+        }
+
+        Console.WriteLine($"Жұп сандар саны: {evenCount}");
+        Console.WriteLine($"Тақ сандар саны: {oddCount}");
+    }
+}

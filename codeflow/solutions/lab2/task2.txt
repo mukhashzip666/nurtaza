@@ -1,0 +1,10 @@
+using System;
+
+class Program {
+    static void Main() {
+        string name = "Ulan";
+        int age = 18;
+        double gpa = 3.2;
+        Console.WriteLine($"Name: {name}, Age: {age}, GPA: {gpa}");
+    }
+}
