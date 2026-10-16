@@ -6,22 +6,23 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        double w = D(), h = D();
-        double bmi = w / (h * h);
-        Console.WriteLine("BMI: " + bmi.ToString("F2"));
-        Console.WriteLine(bmi < 18.5 ? "Underweight" : bmi < 25 ? "Normal" : "Overweight");
+        Console.Write("Enter weigh (kg):");
+        double weightKg = double.Parse(Console.ReadLine());
+        Console.Write("Enter height (m):");
+        double heightMeters = double.Parse(Console.ReadLine());
+        double bodyMassIndex = weightKg / (heightMeters * heightMeters);
+        Console.WriteLine("BMI: " + bodyMassIndex.ToString("F2"));
+        if (bodyMassIndex < 18.5)
+        {
+            Console.WriteLine("Underweight");
+        }
+        else if (bodyMassIndex < 25)
+        {
+            Console.WriteLine("Normal");
+        }
+        else
+        {
+            Console.WriteLine("Overweight");
+        }
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

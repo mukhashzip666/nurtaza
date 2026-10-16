@@ -6,6 +6,9 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        for (int i = 2; i <= 50; i += 2) Console.WriteLine(i);
+        for (int evenNumber = 2; evenNumber <= 50; evenNumber += 2)
+        {
+            Console.WriteLine(evenNumber);
+        }
     }
 }

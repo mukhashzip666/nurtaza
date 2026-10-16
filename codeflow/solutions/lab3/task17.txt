@@ -6,22 +6,24 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        double total = D();
-        double discount = total > 100 ? 20 : total > 50 ? 10 : 0;
-        Console.WriteLine("Discount: " + discount + "%");
-        Console.WriteLine("Final price: " + (total - total * discount / 100));
-    }
+        Console.Write("Enter cart total: ");
+        double cartTotal = double.Parse(Console.ReadLine());
+        double discountPercent;
+        if (cartTotal > 100)
+        {
+            discountPercent = 20;
+        }
+        else if (cartTotal > 50)
+        {
+            discountPercent = 10;
+        }
+        else
+        {
+            discountPercent = 0;
+        }
 
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
+        double amountToPay = cartTotal - cartTotal * discountPercent / 100;
+        Console.WriteLine("Discount: " + discountPercent + "%");
+        Console.WriteLine("Final price: " + amountToPay);
     }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

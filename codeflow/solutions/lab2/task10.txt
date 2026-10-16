@@ -6,8 +6,8 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        double x = 9.7;
-        int n = (int)x;
-        Console.WriteLine(n);
+        double realValue = 9.7;
+        int truncatedValue = (int)realValue;
+        Console.WriteLine(truncatedValue);
     }
 }

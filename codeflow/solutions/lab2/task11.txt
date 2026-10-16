@@ -6,8 +6,8 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        string s = "123.45";
-        double x = double.Parse(s, CultureInfo.InvariantCulture);
-        Console.WriteLine(x * 2);
+        string numericText = "123.45";
+        double parsedValue = Convert.ToDouble(numericText);
+        Console.WriteLine(parsedValue * 2);
     }
 }

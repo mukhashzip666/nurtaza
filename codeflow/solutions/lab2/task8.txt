@@ -6,20 +6,8 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        bool a = I() != 0, b = I() != 0;
-        Console.WriteLine($"{a && b} {a || b} {a ^ b} {!a}");
+        bool firstFlag = Convert.ToBoolean(int.Parse(Console.ReadLine()));
+        bool secondFlag = Convert.ToBoolean(int.Parse(Console.ReadLine()));
+        Console.WriteLine($"{firstFlag && secondFlag} {firstFlag || secondFlag} {firstFlag ^ secondFlag} {!firstFlag}");
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

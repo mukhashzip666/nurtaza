@@ -6,20 +6,7 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        long n = I();
-        Console.WriteLine(n * n);
+        int number = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine((long)number * number);
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

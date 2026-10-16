@@ -6,30 +6,31 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        double a = D(), b = D();
-        string op = Next();
-        switch (op)
+        double leftOperand = double.Parse(Console.ReadLine());
+        double rightOperand = double.Parse(Console.ReadLine());
+        string operation = Console.ReadLine();
+        switch (operation)
         {
-            case "+": Console.WriteLine(a + b); break;
-            case "-": Console.WriteLine(a - b); break;
-            case "*": Console.WriteLine(a * b); break;
+            case "+":
+                Console.WriteLine(leftOperand + rightOperand);
+                break;
+            case "-":
+                Console.WriteLine(leftOperand - rightOperand);
+                break;
+            case "*":
+                Console.WriteLine(leftOperand * rightOperand);
+                break;
             case "/":
-                if (b != 0) Console.WriteLine(a / b);
-                else Console.WriteLine("Нөлге бөлуге болмайды!");
+                if (rightOperand != 0)
+                {
+                    Console.WriteLine(leftOperand / rightOperand);
+                }
+                else
+                {
+                    Console.WriteLine("Нөлге бөлуге болмайды!");
+                }
+
                 break;
         }
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

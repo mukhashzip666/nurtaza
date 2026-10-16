@@ -6,21 +6,11 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        double sum = 0;
-        for (int i = 0; i < 5; i++) sum += D();
-        Console.WriteLine(sum / 5);
+        double first = double.Parse(Console.ReadLine());
+        double second = double.Parse(Console.ReadLine());
+        double third = double.Parse(Console.ReadLine());
+        double fourth = double.Parse(Console.ReadLine());
+        double fifth = double.Parse(Console.ReadLine());
+        Console.WriteLine((first + second + third + fourth + fifth) / 5);
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

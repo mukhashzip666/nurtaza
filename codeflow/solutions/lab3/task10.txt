@@ -6,21 +6,22 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        double n = D();
-        double cost = n <= 100 ? n * 0.5 : n <= 300 ? 50 + (n - 100) * 0.75 : 200 + (n - 300) * 1.20;
-        Console.WriteLine("Total cost: " + cost);
-    }
+        Console.Write("Enter units used: ");
+        double consumedUnits = double.Parse(Console.ReadLine());
+        double totalCost;
+        if (consumedUnits <= 100)
+        {
+            totalCost = consumedUnits * 0.5;
+        }
+        else if (consumedUnits <= 300)
+        {
+            totalCost = 100 * 0.5 + (consumedUnits - 100) * 0.75;
+        }
+        else
+        {
+            totalCost = 100 * 0.5 + 200 * 0.75 + (consumedUnits - 300) * 1.20;
+        }
 
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
+        Console.WriteLine("Total cost: " + totalCost);
     }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

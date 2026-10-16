@@ -6,20 +6,11 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        int n = I();
-        for (int i = 1; i <= 10; i++) Console.WriteLine($"{n} * {i} = {(long)n * i}");
+        Console.Write("Enter x: ");
+        int number = int.Parse(Console.ReadLine());
+        for (int multiplier = 1; multiplier <= 10; multiplier++)
+        {
+            Console.WriteLine(number + " * " + multiplier + " = " + (long)number * multiplier);
+        }
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

@@ -6,24 +6,18 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
+        int[, ] matrix = new int[3, 3];
+        for (int row = 0; row < 3; row++)
+        {
+            for (int column = 0; column < 3; column++)
             {
-                int x = I();
-                if (i == j) Console.Write(x + " ");
+                matrix[row, column] = int.Parse(Console.ReadLine());
             }
-    }
+        }
 
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
+        for (int row = 0; row < 3; row++)
+        {
+            Console.Write(matrix[row, row] + " ");
+        }
     }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

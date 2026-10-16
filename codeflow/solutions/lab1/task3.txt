@@ -6,8 +6,10 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        string s = Console.ReadLine();
-        int a = int.Parse(Console.ReadLine());
-        Console.WriteLine($"Your name is {s} and you are {a} years old.");
+        Console.Write("Enter your name: ");
+        string userName = Console.ReadLine();
+        Console.Write("Enter your age: ");
+        int userAge = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine($"Your name is {userName} and you are {userAge} years old.");
     }
 }

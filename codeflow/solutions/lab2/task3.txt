@@ -6,23 +6,9 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        int i = I();
-        double d = D();
-        char c = Next()[0];
-        Console.WriteLine($"{i} ({i.GetType()}), {d} ({d.GetType()}), {c} ({c.GetType()})");
+        int integerValue = int.Parse(Console.ReadLine());
+        double realValue = double.Parse(Console.ReadLine());
+        char character = Console.ReadLine()[0];
+        Console.WriteLine($"{integerValue} ({integerValue.GetType()}), {realValue} ({realValue.GetType()}), {character} ({character.GetType()})");
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

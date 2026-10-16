@@ -6,20 +6,23 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        int n = I();
-        Console.WriteLine(n >= 90 && n <= 100 ? "A" : n >= 75 ? "B" : n >= 50 ? "C" : "Fail");
+        Console.Write("Enter marks: ");
+        int score = int.Parse(Console.ReadLine());
+        if (score >= 90 && score <= 100)
+        {
+            Console.WriteLine("A");
+        }
+        else if (score >= 75)
+        {
+            Console.WriteLine("B");
+        }
+        else if (score >= 50)
+        {
+            Console.WriteLine("C");
+        }
+        else
+        {
+            Console.WriteLine("Fail");
+        }
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

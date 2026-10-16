@@ -6,19 +6,15 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        for (int n = I(); n > 0; n--) Console.WriteLine(new string('*', n));
-    }
+        int rowCount = int.Parse(Console.ReadLine());
+        for (int width = rowCount; width >= 1; width--)
+        {
+            for (int column = 1; column <= width; column++)
+            {
+                Console.Write("*");
+            }
 
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
+            Console.WriteLine();
+        }
     }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

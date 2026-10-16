@@ -6,6 +6,7 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        Console.WriteLine("Hello, World! Welcome to C#");
+        const string greeting = "Hello, World! Welcome to C#";
+        Console.WriteLine(greeting);
     }
 }

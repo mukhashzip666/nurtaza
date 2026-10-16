@@ -6,23 +6,18 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        double a = D(), b = D();
-        Console.WriteLine("Қосындысы: " + (a + b));
-        Console.WriteLine("Айырмасы: " + (a - b));
-        Console.WriteLine("Көбейтіндісі: " + (a * b));
-        Console.WriteLine(b != 0 ? "Бөліндісі: " + (a / b) : "Нөлге бөлуге болмайды!");
+        double firstValue = Convert.ToDouble(Console.ReadLine());
+        double secondValue = Convert.ToDouble(Console.ReadLine());
+        Console.WriteLine("Қосындысы: " + (firstValue + secondValue));
+        Console.WriteLine("Айырмасы: " + (firstValue - secondValue));
+        Console.WriteLine("Көбейтіндісі: " + (firstValue * secondValue));
+        if (secondValue != 0)
+        {
+            Console.WriteLine("Бөліндісі: " + (firstValue / secondValue));
+        }
+        else
+        {
+            Console.WriteLine("Нөлге бөлуге болмайды!");
+        }
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

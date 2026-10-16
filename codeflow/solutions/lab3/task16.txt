@@ -6,31 +6,37 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        double a = D(), b = D();
-        string op = Next();
-        switch (op)
+        Console.Write("Enter first number: ");
+        double leftOperand = double.Parse(Console.ReadLine());
+        Console.Write("Enter second number: ");
+        double rightOperand = double.Parse(Console.ReadLine());
+        Console.Write("Enter operator: ");
+        string operation = Console.ReadLine();
+        switch (operation)
         {
-            case "+": Console.WriteLine(a + b); break;
-            case "-": Console.WriteLine(a - b); break;
-            case "*": Console.WriteLine(a * b); break;
-            case "/":
-                if (b != 0) Console.WriteLine(a / b);
-                else Console.WriteLine("Cannot divide by zero");
+            case "+":
+                Console.WriteLine(leftOperand + rightOperand);
                 break;
-            default: Console.WriteLine("Invalid operator"); break;
+            case "-":
+                Console.WriteLine(leftOperand - rightOperand);
+                break;
+            case "*":
+                Console.WriteLine(leftOperand * rightOperand);
+                break;
+            case "/":
+                if (rightOperand != 0)
+                {
+                    Console.WriteLine(leftOperand / rightOperand);
+                }
+                else
+                {
+                    Console.WriteLine("Cannot divide by zero");
+                }
+
+                break;
+            default:
+                Console.WriteLine("Invalid operator");
+                break;
         }
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

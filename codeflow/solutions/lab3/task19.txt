@@ -6,19 +6,22 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        string s = Next().ToLowerInvariant();
-        Console.WriteLine(s == "vip" ? "Price: 100" : s == "standard" ? "Price: 60" : s == "economy" ? "Price: 30" : "Invalid category");
-    }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
+        Console.Write("Enter seat category: ");
+        string seatCategory = Console.ReadLine();
+        switch (seatCategory.ToLowerInvariant())
+        {
+            case "vip":
+                Console.WriteLine("Price: 100");
+                break;
+            case "standard":
+                Console.WriteLine("Price: 60");
+                break;
+            case "economy":
+                Console.WriteLine("Price: 30");
+                break;
+            default:
+                Console.WriteLine("Invalid category");
+                break;
+        }
     }
 }

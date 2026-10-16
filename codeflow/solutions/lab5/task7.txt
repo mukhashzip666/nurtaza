@@ -6,22 +6,26 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        int[] a = new int[10];
-        for (int i = 0; i < 10; i++) a[i] = I();
-        Array.Reverse(a);
-        for (int i = 0; i < 10; i++) Console.WriteLine(a[i]);
-    }
+        int[] values = new int[10];
+        for (int index = 0; index < values.Length; index++)
+        {
+            values[index] = int.Parse(Console.ReadLine());
+        }
 
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
+        int leftIndex = 0;
+        int rightIndex = values.Length - 1;
+        while (leftIndex < rightIndex)
+        {
+            int temporary = values[leftIndex];
+            values[leftIndex] = values[rightIndex];
+            values[rightIndex] = temporary;
+            leftIndex++;
+            rightIndex--;
+        }
+
+        for (int index = 0; index < values.Length; index++)
+        {
+            Console.WriteLine(values[index]);
+        }
     }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

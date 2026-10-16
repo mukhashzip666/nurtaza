@@ -6,32 +6,70 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        long[] rows = new long[3], cols = new long[3];
-        long d1 = 0, d2 = 0;
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++)
+        int[, ] matrix = new int[3, 3];
+        for (int row = 0; row < 3; row++)
+        {
+            for (int column = 0; column < 3; column++)
             {
-                int x = I();
-                rows[i] += x; cols[j] += x;
-                if (i == j) d1 += x;
-                if (i + j == 2) d2 += x;
+                matrix[row, column] = int.Parse(Console.ReadLine());
             }
-        long target = rows[0];
-        bool ok = d1 == target && d2 == target;
-        for (int i = 0; i < 3; i++) ok &= rows[i] == target && cols[i] == target;
-        Console.WriteLine(ok ? "Magic square" : "Not a magic square");
-    }
+        }
 
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
+        long expectedSum = 0;
+        for (int column = 0; column < 3; column++)
+        {
+            expectedSum += matrix[0, column];
+        }
+
+        bool isMagic = true;
+        for (int row = 0; row < 3; row++)
+        {
+            long lineSum = 0;
+            for (int column = 0; column < 3; column++)
+            {
+                lineSum += matrix[row, column];
+            }
+
+            if (lineSum != expectedSum)
+            {
+                isMagic = false;
+            }
+        }
+
+        for (int column = 0; column < 3; column++)
+        {
+            long lineSum = 0;
+            for (int row = 0; row < 3; row++)
+            {
+                lineSum += matrix[row, column];
+            }
+
+            if (lineSum != expectedSum)
+            {
+                isMagic = false;
+            }
+        }
+
+        long mainDiagonalSum = 0;
+        long secondaryDiagonalSum = 0;
+        for (int row = 0; row < 3; row++)
+        {
+            mainDiagonalSum += matrix[row, row];
+            secondaryDiagonalSum += matrix[row, 2 - row];
+        }
+
+        if (mainDiagonalSum != expectedSum || secondaryDiagonalSum != expectedSum)
+        {
+            isMagic = false;
+        }
+
+        if (isMagic)
+        {
+            Console.WriteLine("Magic square");
+        }
+        else
+        {
+            Console.WriteLine("Not a magic square");
+        }
     }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

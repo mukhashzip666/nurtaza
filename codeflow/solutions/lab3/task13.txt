@@ -6,7 +6,19 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        string u = Console.ReadLine(), p = Console.ReadLine();
-        Console.WriteLine(u == "admin" && p == "12345" ? "Login successful" : "Error");
+        string expectedUsername = "admin";
+        string expectedPassword = "12345";
+        Console.Write("Enter username: ");
+        string enteredUsername = Console.ReadLine();
+        Console.Write("Enter password: ");
+        string enteredPassword = Console.ReadLine();
+        if (enteredUsername == expectedUsername && enteredPassword == expectedPassword)
+        {
+            Console.WriteLine("Login successful");
+        }
+        else
+        {
+            Console.WriteLine("Error");
+        }
     }
 }

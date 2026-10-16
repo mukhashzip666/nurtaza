@@ -6,7 +6,16 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        string p = Console.ReadLine();
-        Console.WriteLine(p == "12345" ? "Access Granted" : "Access Denied");
+        string expectedPassword = "12345";
+        Console.Write("Enter password: ");
+        string enteredPassword = Console.ReadLine();
+        if (enteredPassword == expectedPassword)
+        {
+            Console.WriteLine("Access Granted");
+        }
+        else
+        {
+            Console.WriteLine("Access Denied");
+        }
     }
 }

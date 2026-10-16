@@ -6,11 +6,11 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        int a = 5;
-        double b = 3.14;
-        char c = 'A';
-        string s = "Hello";
-        bool d = true;
-        Console.WriteLine($"{a} {b} {c} {s} {d}");
+        int integerValue = 5;
+        double realValue = 3.14;
+        char letter = 'A';
+        string message = "Hello";
+        bool flag = true;
+        Console.WriteLine($"{integerValue} {realValue} {letter} {message} {flag}");
     }
 }

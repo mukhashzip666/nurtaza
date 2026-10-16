@@ -6,20 +6,10 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        double a = D(), b = D(), c = D();
-        Console.WriteLine((a + b + c) / 3);
+        double firstValue = Convert.ToDouble(Console.ReadLine());
+        double secondValue = Convert.ToDouble(Console.ReadLine());
+        double thirdValue = Convert.ToDouble(Console.ReadLine());
+        double mean = (firstValue + secondValue + thirdValue) / 3;
+        Console.WriteLine(mean);
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

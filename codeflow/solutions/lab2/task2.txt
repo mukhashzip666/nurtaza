@@ -6,9 +6,9 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        string name = "Ulan";
-        int age = 18;
-        double gpa = 3.2;
-        Console.WriteLine($"Name: {name}, Age: {age}, GPA: {gpa}");
+        string studentName = "Ulan";
+        int studentAge = 18;
+        double gradePointAverage = 3.2;
+        Console.WriteLine($"Name: {studentName}, Age: {studentAge}, GPA: {gradePointAverage}");
     }
 }

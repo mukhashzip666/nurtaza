@@ -6,19 +6,15 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        Console.WriteLine(D() < 0 ? "Freezing Weather" : "Normal");
+        Console.Write("Enter temperature");
+        double celsius = double.Parse(Console.ReadLine());
+        if (celsius < 0)
+        {
+            Console.WriteLine("Freezing Weather");
+        }
+        else
+        {
+            Console.WriteLine("Normal");
+        }
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

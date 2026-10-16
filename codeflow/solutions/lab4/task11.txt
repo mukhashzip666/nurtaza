@@ -7,25 +7,16 @@ class Program
     static void Main()
     {
         CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
-        int n = I();
-        BigInteger a = 0, b = 1;
-        for (int i = 0; i < n; i++)
+        Console.Write("Enter n: ");
+        int termCount = int.Parse(Console.ReadLine());
+        BigInteger current = 0;
+        BigInteger next = 1;
+        for (int index = 0; index < termCount; index++)
         {
-            Console.Write(a + " ");
-            BigInteger c = a + b; a = b; b = c;
+            Console.Write(current + " ");
+            BigInteger following = current + next;
+            current = next;
+            next = following;
         }
     }
-
-    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
-    static string Next()
-    {
-        int c;
-        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
-        if (c < 0) throw new System.IO.EndOfStreamException();
-        var s = new System.Text.StringBuilder();
-        do { s.Append((char)c); c = Input.Read(); }
-        while (c >= 0 && !char.IsWhiteSpace((char)c));
-        return s.ToString();
-    }
-    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }
