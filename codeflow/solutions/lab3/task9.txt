@@ -1,17 +1,25 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter usage in GB: ");
-        double usage = double.Parse(Console.ReadLine());
-
-        if (usage < 5)
-            Console.WriteLine("Basic Plan");
-        else if (usage <= 15)
-            Console.WriteLine("Standard Plan");
-        else
-            Console.WriteLine("Premium Plan");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double x = D();
+        Console.WriteLine(x < 5 ? "Basic Plan" : x <= 15 ? "Standard Plan" : "Premium Plan");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

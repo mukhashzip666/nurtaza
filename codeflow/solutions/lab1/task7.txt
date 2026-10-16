@@ -1,18 +1,25 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        
-        double a = Convert.ToDouble(Console.ReadLine());
-        double b = Convert.ToDouble(Console.ReadLine());
-        double c = Convert.ToDouble(Console.ReadLine());
-
-      
-        double average = (a + b + c) / 3;
-
-        //мен котергенде прям кушти проект болар еди
-        Console.WriteLine(average);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double a = D(), b = D(), c = D();
+        Console.WriteLine((a + b + c) / 3);
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

@@ -1,11 +1,11 @@
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        for(int i=1; i<=20; i++)
-        {
-            Console.WriteLine(i);
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        for (int i = 1; i <= 20; i++) Console.WriteLine(i);
     }
 }

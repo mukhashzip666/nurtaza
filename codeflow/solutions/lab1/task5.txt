@@ -1,23 +1,28 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        double a = Convert.ToDouble(Console.ReadLine());
-        double b = Convert.ToDouble(Console.ReadLine());
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double a = D(), b = D();
         Console.WriteLine("Қосындысы: " + (a + b));
         Console.WriteLine("Айырмасы: " + (a - b));
         Console.WriteLine("Көбейтіндісі: " + (a * b));
-
-        if (b != 0)
-        {
-            Console.WriteLine("Бөліндісі: " + (a / b));
-        }
-        else
-        {
-            Console.WriteLine("Нөлге бөлуге болмайды!");
-        }
+        Console.WriteLine(b != 0 ? "Бөліндісі: " + (a / b) : "Нөлге бөлуге болмайды!");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

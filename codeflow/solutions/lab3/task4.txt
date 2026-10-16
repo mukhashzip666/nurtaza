@@ -1,13 +1,25 @@
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter age: ");
-        int age=int.Parse(Console.ReadLine());
-        if (age<12 || age>60)
-            Console.WriteLine("Discount applied");
-        else
-            Console.WriteLine("Full price");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int a = I();
+        Console.WriteLine(a < 12 || a > 60 ? "Discount applied" : "Full price");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

@@ -1,21 +1,12 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        string correctUsername = "admin";
-        string correctPassword = "12345";
-
-        Console.Write("Enter username: ");
-        string username = Console.ReadLine();
-
-        Console.Write("Enter password: ");
-        string password = Console.ReadLine();
-
-        if (username == correctUsername && password == correctPassword)
-            Console.WriteLine("Login successful");
-        else
-            Console.WriteLine("Error");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string u = Console.ReadLine(), p = Console.ReadLine();
+        Console.WriteLine(u == "admin" && p == "12345" ? "Login successful" : "Error");
     }
 }

@@ -1,26 +1,24 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter light color: ");
-        string color = Console.ReadLine();
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string c = Next().ToLowerInvariant();
+        Console.WriteLine(c == "red" ? "Stop" : c == "yellow" ? "Wait" : c == "green" ? "Go" : "Invalid color");
+    }
 
-        switch (color.ToLower())
-        {
-            case "red":
-                Console.WriteLine("Stop");
-                break;
-            case "yellow":
-                Console.WriteLine("Wait");
-                break;
-            case "green":
-                Console.WriteLine("Go");
-                break;
-            default:
-                Console.WriteLine("Invalid color");
-                break;
-        }
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
     }
 }

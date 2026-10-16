@@ -1,42 +1,36 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter first number: ");
-        double a = double.Parse(Console.ReadLine());
-
-        Console.Write("Enter second number: ");
-        double b = double.Parse(Console.ReadLine());
-
-        Console.Write("Enter operator: ");
-        string op = Console.ReadLine();
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double a = D(), b = D();
+        string op = Next();
         switch (op)
         {
-            case "+":
-                Console.WriteLine(a + b);
-                break;
-
-            case "-":
-                Console.WriteLine(a - b);
-                break;
-
-            case "*":
-                Console.WriteLine(a * b);
-                break;
-
+            case "+": Console.WriteLine(a + b); break;
+            case "-": Console.WriteLine(a - b); break;
+            case "*": Console.WriteLine(a * b); break;
             case "/":
-                if (b != 0)
-                    Console.WriteLine(a / b);
-                else
-                    Console.WriteLine("Cannot divide by zero");
+                if (b != 0) Console.WriteLine(a / b);
+                else Console.WriteLine("Cannot divide by zero");
                 break;
-
-            default:
-                Console.WriteLine("Invalid operator");
-                break;
+            default: Console.WriteLine("Invalid operator"); break;
         }
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

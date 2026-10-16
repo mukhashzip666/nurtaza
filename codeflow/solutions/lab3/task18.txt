@@ -1,20 +1,26 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter total classes: ");
-        int totalClasses = int.Parse(Console.ReadLine());
-
-        Console.Write("Enter attended classes: ");
-        int attendedClasses = int.Parse(Console.ReadLine());
-
-        double attendance = (double)attendedClasses / totalClasses * 100;
-
-        if (attendance >= 75)
-            Console.WriteLine("Eligible");
-        else
-            Console.WriteLine("Not eligible");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int total = I(), attended = I();
+        double percent = (double)attended / total * 100;
+        Console.WriteLine(percent >= 75 ? "Eligible" : "Not eligible");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

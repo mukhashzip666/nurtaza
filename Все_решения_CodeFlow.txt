@@ -1,206 +1,460 @@
-CodeFlow — все решения C#
-Лабораторные работы 1–5, задания 1–71
+ВАРИАНТ 1 — ОЛИМПИАДНЫЙ СТИЛЬ
+71 самостоятельная программа C#
+Лабораторные работы №1–5
 
-====================================================================
+В этом файле собраны только решения варианта 1.
+Каждое задание запускается отдельно: скопируйте содержимое одного блока
+между ```csharp и ``` в Program.cs консольного проекта .NET 8.
+Сами ограничители копировать не нужно.
+
+Ввод чисел, операций и отдельных слов — через любые пробельные
+разделители: пробелы, табуляции, переносы строк. Имена, логин и пароли
+читаются по строкам там, где это указано. Приглашения ко вводу убраны,
+исходные подписи результатов сохранены. Все вспомогательные методы
+включены в соответствующую программу.
+
+Вещественные числа вводятся с точкой. Размер массива или матрицы
+перед элементами вводить не нужно: размер задан в коде.
+В суммах и произведениях, где возможно переполнение int, используется
+long; для факториала и Фибоначчи — BigInteger. Подробнее — в коде
+и примечаниях к заданиям. Ввод символа в 2.3 работает через stdin.
+
+ОГЛАВЛЕНИЕ
+
+Лабораторная №1
+  1.01 — Приветствие
+  1.02 — Приветствие по имени
+  1.03 — Имя и возраст
+  1.04 — Сумма двух целых
+  1.05 — Четыре арифметические операции
+  1.06 — Квадрат целого числа
+  1.07 — Среднее трёх чисел
+  1.08 — Перевод градусов Цельсия в Фаренгейты
+  1.09 — Площадь и периметр прямоугольника
+  1.10 — Калькулятор
+
+Лабораторная №2
+  2.01 — Основные типы данных
+  2.02 — Данные студента
+  2.03 — Ввод значений и вывод их типов
+  2.04 — Арифметика с целыми и вещественное деление
+  2.05 — Среднее пяти чисел
+  2.06 — Остатки от деления
+  2.07 — Квадрат, куб и квадратный корень
+  2.08 — Логические операции
+  2.09 — Неявное преобразование int в double
+  2.10 — Явное преобразование double в int
+  2.11 — Преобразование строки в число
+
+Лабораторная №3
+  3.01 — Возраст для водительских прав
+  3.02 — Чётность
+  3.03 — Температура ниже нуля
+  3.04 — Скидка по возрасту
+  3.05 — Знак числа
+  3.06 — Выбор блюда
+  3.07 — День недели
+  3.08 — Цвет светофора
+  3.09 — Выбор интернет-тарифа
+  3.10 — Стоимость электричества
+  3.11 — Оценка по баллам
+  3.12 — Проверка пароля
+  3.13 — Проверка логина и пароля
+  3.14 — Проверка PIN
+  3.15 — Индекс массы тела
+  3.16 — Калькулятор с проверкой операции
+  3.17 — Скидка на корзину
+  3.18 — Допуск по посещаемости
+  3.19 — Цена места по категории
+  3.20 — Скидка по количеству дней
+
+Лабораторная №4
+  4.01 — Числа от 1 до 20
+  4.02 — Чётные числа от 2 до 50
+  4.03 — Сумма от 1 до n
+  4.04 — Таблица умножения заданного числа
+  4.05 — Факториал
+  4.06 — Обратный отсчёт
+  4.07 — Сумма цифр
+  4.08 — Количество цифр
+  4.09 — Пять чисел в обратном порядке
+  4.10 — Подсчёт положительных, отрицательных и нулей
+  4.11 — Первые n чисел Фибоначчи
+  4.12 — Проверка простоты
+  4.13 — Таблица умножения 10 × 10
+  4.14 — Сумма элементов матрицы 3 × 3
+  4.15 — Суммы строк матрицы 3 × 3
+  4.16 — Возрастающий треугольник из звёздочек
+  4.17 — Числовой треугольник
+  4.18 — Убывающий треугольник из звёздочек
+  4.19 — Главная диагональ матрицы 3 × 3
+  4.20 — Проверка магического квадрата
+
+Лабораторная №5
+  5.01 — Ввод и вывод массива
+  5.02 — Максимум, минимум и их индексы
+  5.03 — Сортировка фиксированного массива по возрастанию
+  5.04 — Элементы выше среднего
+  5.05 — Обмен максимального и минимального элементов
+  5.06 — Количество чётных и нечётных
+  5.07 — Разворот массива
+  5.08 — Линейный поиск
+  5.09 — Суммы соседних элементов
+  5.10 — Сортировка массива по убыванию
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №1
-====================================================================
+Приветствие
+ВАРИАНТ 1
+========================================================================
+Ввод: нет.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         Console.WriteLine("Hello, World! Welcome to C#");
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №2
-====================================================================
+Приветствие по имени
+ВАРИАНТ 1
+========================================================================
+Ввод: имя — отдельная строка, пробелы внутри имени сохраняются.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Введите ваше имя: ");
-        string name = Console.ReadLine();
-
-        Console.WriteLine("Hello, " + name + "! Nice to meet you.");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string s = Console.ReadLine();
+        Console.WriteLine("Hello, " + s + "! Nice to meet you.");
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №3
-====================================================================
+Имя и возраст
+ВАРИАНТ 1
+========================================================================
+Ввод: имя — первая строка; возраст — вторая строка.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter your name: ");
-        string name = Console.ReadLine();
-
-        Console.Write("Enter your age: ");
-        int age = Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine($"Your name is {name} and you are {age} years old.");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string s = Console.ReadLine();
+        int a = int.Parse(Console.ReadLine());
+        Console.WriteLine($"Your name is {s} and you are {a} years old.");
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №4
-====================================================================
+Сумма двух целых
+ВАРИАНТ 1
+========================================================================
+Ввод: два целых числа.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int a = Convert.ToInt32(Console.ReadLine());
-        int b = Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine(a + b);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int a = I(), b = I();
+        Console.WriteLine((long)a + b);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №5
-====================================================================
+Четыре арифметические операции
+ВАРИАНТ 1
+========================================================================
+Ввод: два вещественных числа.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        double a = Convert.ToDouble(Console.ReadLine());
-        double b = Convert.ToDouble(Console.ReadLine());
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double a = D(), b = D();
         Console.WriteLine("Қосындысы: " + (a + b));
         Console.WriteLine("Айырмасы: " + (a - b));
         Console.WriteLine("Көбейтіндісі: " + (a * b));
-
-        if (b != 0)
-        {
-            Console.WriteLine("Бөліндісі: " + (a / b));
-        }
-        else
-        {
-            Console.WriteLine("Нөлге бөлуге болмайды!");
-        }
+        Console.WriteLine(b != 0 ? "Бөліндісі: " + (a / b) : "Нөлге бөлуге болмайды!");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №6
-====================================================================
+Квадрат целого числа
+ВАРИАНТ 1
+========================================================================
+Ввод: одно целое число.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int a = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine(a * a);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        long n = I();
+        Console.WriteLine(n * n);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №7
-====================================================================
+Среднее трёх чисел
+ВАРИАНТ 1
+========================================================================
+Ввод: три вещественных числа.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        
-        double a = Convert.ToDouble(Console.ReadLine());
-        double b = Convert.ToDouble(Console.ReadLine());
-        double c = Convert.ToDouble(Console.ReadLine());
-
-      
-        double average = (a + b + c) / 3;
-
-        //мен котергенде прям кушти проект болар еди
-        Console.WriteLine(average);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double a = D(), b = D(), c = D();
+        Console.WriteLine((a + b + c) / 3);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №8
-====================================================================
+Перевод градусов Цельсия в Фаренгейты
+ВАРИАНТ 1
+========================================================================
+Ввод: температура — вещественное число.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        double c = Convert.ToDouble(Console.ReadLine());
-        double f = c * 9 / 5 + 32;
-        Console.WriteLine(f);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double c = D();
+        Console.WriteLine(c * 9 / 5 + 32);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №9
-====================================================================
+Площадь и периметр прямоугольника
+ВАРИАНТ 1
+========================================================================
+Ввод: две вещественные длины сторон.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        double a = Convert.ToDouble(Console.ReadLine());
-        double b = Convert.ToDouble(Console.ReadLine());
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double a = D(), b = D();
         Console.WriteLine(a * b);
         Console.WriteLine(2 * (a + b));
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №1 — ЗАДАНИЕ №10
-====================================================================
+Калькулятор
+ВАРИАНТ 1
+========================================================================
+Ввод: два вещественных числа, затем знак +, -, * или /.
+Примечание: Порядок ввода: a b знак, а не a знак b. Неизвестная операция, как в исходнике, ничего не выводит.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        double a = double.Parse(Console.ReadLine());
-        double b = double.Parse(Console.ReadLine());
-        string op = Console.ReadLine();
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double a = D(), b = D();
+        string op = Next();
         switch (op)
         {
-            case "+":
-                Console.WriteLine(a + b);
-                break;
-            case "-":
-                Console.WriteLine(a - b);
-                break;
-            case "*":
-                Console.WriteLine(a * b);
-                break;
+            case "+": Console.WriteLine(a + b); break;
+            case "-": Console.WriteLine(a - b); break;
+            case "*": Console.WriteLine(a * b); break;
             case "/":
-                if (b != 0)
-                    Console.WriteLine(a / b);
-                else
-                    Console.WriteLine("Нөлге бөлуге болмайды!");
+                if (b != 0) Console.WriteLine(a / b);
+                else Console.WriteLine("Нөлге бөлуге болмайды!");
                 break;
         }
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №1
-====================================================================
-using System;
+Основные типы данных
+ВАРИАНТ 1
+========================================================================
+Ввод: нет.
 
-class Program {
-    static void Main() {
+```csharp
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         int a = 5;
         double b = 3.14;
         char c = 'A';
@@ -209,1480 +463,2166 @@ class Program {
         Console.WriteLine($"{a} {b} {c} {s} {d}");
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №2
-====================================================================
-using System;
+Данные студента
+ВАРИАНТ 1
+========================================================================
+Ввод: нет.
 
-class Program {
-    static void Main() {
+```csharp
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         string name = "Ulan";
         int age = 18;
         double gpa = 3.2;
         Console.WriteLine($"Name: {name}, Age: {age}, GPA: {gpa}");
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №3
-====================================================================
+Ввод значений и вывод их типов
+ВАРИАНТ 1
+========================================================================
+Ввод: целое, вещественное, один непробельный символ; в варианте 2 — по строке на значение.
+Примечание: Console.ReadKey заменён чтением stdin: программа работает при перенаправлении ввода. Эхо клавиши и пустая строка перед результатом убраны. В варианте 2 символ — первый символ третьей строки (может быть пробелом).
+
+```csharp
 using System;
+using System.Globalization;
 
-class Program {
-    static void Main() {
-        int i = int.Parse(Console.ReadLine());
-        double d = double.Parse(Console.ReadLine());
-        char ch = Console.ReadKey().KeyChar;
-        Console.WriteLine();
-        Console.WriteLine($"{i} ({i.GetType()}), {d} ({d.GetType()}), {ch} ({ch.GetType()})");
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int i = I();
+        double d = D();
+        char c = Next()[0];
+        Console.WriteLine($"{i} ({i.GetType()}), {d} ({d.GetType()}), {c} ({c.GetType()})");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №4
-====================================================================
+Арифметика с целыми и вещественное деление
+ВАРИАНТ 1
+========================================================================
+Ввод: два целых числа.
+Примечание: Как в исходнике, деление выполняется в double: при нулевом делителе выводится Infinity, -Infinity или NaN.
+
+```csharp
 using System;
+using System.Globalization;
 
-class Program {
-    static void Main() {
-        int x = int.Parse(Console.ReadLine());
-        int y = int.Parse(Console.ReadLine());
-        Console.WriteLine($"{x + y} {x - y} {x * y} {(double)x / y}");
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int a = I(), b = I();
+        Console.WriteLine($"{(long)a + b} {(long)a - b} {(long)a * b} {(double)a / b}");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №5
-====================================================================
-using System;
+Среднее пяти чисел
+ВАРИАНТ 1
+========================================================================
+Ввод: пять вещественных чисел.
 
-class Program {
-    static void Main() {
-        double a = double.Parse(Console.ReadLine());
-        double b = double.Parse(Console.ReadLine());
-        double c = double.Parse(Console.ReadLine());
-        double d = double.Parse(Console.ReadLine());
-        double e = double.Parse(Console.ReadLine());
-        Console.WriteLine((a + b + c + d + e) / 5);
+```csharp
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double sum = 0;
+        for (int i = 0; i < 5; i++) sum += D();
+        Console.WriteLine(sum / 5);
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №6
-====================================================================
-using System;
+Остатки от деления
+ВАРИАНТ 1
+========================================================================
+Ввод: одно целое число.
 
-class Program {
-    static void Main() {
-        int n = int.Parse(Console.ReadLine());
+```csharp
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I();
         Console.WriteLine($"{n % 2} {n % 3} {n % 5}");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №7
-====================================================================
-using System;
+Квадрат, куб и квадратный корень
+ВАРИАНТ 1
+========================================================================
+Ввод: одно вещественное число.
 
-class Program {
-    static void Main() {
-        double n = double.Parse(Console.ReadLine());
+```csharp
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double n = D();
         Console.WriteLine($"{n * n} {n * n * n} {Math.Sqrt(n)}");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №8
-====================================================================
-using System;
+Логические операции
+ВАРИАНТ 1
+========================================================================
+Ввод: два целых числа: 0 означает false, любое ненулевое — true.
 
-class Program {
-    static void Main() {
-        bool a = Convert.ToBoolean(int.Parse(Console.ReadLine()));
-        bool b = Convert.ToBoolean(int.Parse(Console.ReadLine()));
+```csharp
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        bool a = I() != 0, b = I() != 0;
         Console.WriteLine($"{a && b} {a || b} {a ^ b} {!a}");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №9
-====================================================================
-using System;
+Неявное преобразование int в double
+ВАРИАНТ 1
+========================================================================
+Ввод: нет.
 
-class Program {
-    static void Main() {
-        int a = 10;
-        double b = a;
-        Console.WriteLine(b);
+```csharp
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = 10;
+        double x = n;
+        Console.WriteLine(x);
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №10
-====================================================================
-using System;
+Явное преобразование double в int
+ВАРИАНТ 1
+========================================================================
+Ввод: нет.
 
-class Program {
-    static void Main() {
-        double a = 9.7;
-        int b = (int)a;
-        Console.WriteLine(b);
+```csharp
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double x = 9.7;
+        int n = (int)x;
+        Console.WriteLine(n);
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №2 — ЗАДАНИЕ №11
-====================================================================
-using System;
+Преобразование строки в число
+ВАРИАНТ 1
+========================================================================
+Ввод: нет.
 
-class Program {
-    static void Main() {
+```csharp
+using System;
+using System.Globalization;
+
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         string s = "123.45";
-        double d = Convert.ToDouble(s);
-        Console.WriteLine(d * 2);
+        double x = double.Parse(s, CultureInfo.InvariantCulture);
+        Console.WriteLine(x * 2);
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №1
-====================================================================
+Возраст для водительских прав
+ВАРИАНТ 1
+========================================================================
+Ввод: возраст — целое число.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter age: ");
-        int age=int.Parse(Console.ReadLine());
-        if (age>=18)
-        Console.WriteLine("You can get a driving license");
-        else
-        Console.WriteLine("You cannot get a driving license");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        Console.WriteLine(I() >= 18 ? "You can get a driving license" : "You cannot get a driving license");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №2
-====================================================================
+Чётность
+ВАРИАНТ 1
+========================================================================
+Ввод: одно целое число.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter an integer");
-        int number=int.Parse(Console.ReadLine());
-        if (number%2==0)
-            Console.WriteLine("Even");
-        else
-            Console.WriteLine("Odd");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        Console.WriteLine(I() % 2 == 0 ? "Even" : "Odd");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №3
-====================================================================
+Температура ниже нуля
+ВАРИАНТ 1
+========================================================================
+Ввод: температура — вещественное число.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter temperature");
-        double temperature=double.Parse(Console.ReadLine());
-        if (temperature<0)
-            Console.WriteLine("Freezing Weather");
-        else
-            Console.WriteLine("Normal");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        Console.WriteLine(D() < 0 ? "Freezing Weather" : "Normal");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №4
-====================================================================
+Скидка по возрасту
+ВАРИАНТ 1
+========================================================================
+Ввод: возраст — целое число.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter age: ");
-        int age=int.Parse(Console.ReadLine());
-        if (age<12 || age>60)
-            Console.WriteLine("Discount applied");
-        else
-            Console.WriteLine("Full price");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int a = I();
+        Console.WriteLine(a < 12 || a > 60 ? "Discount applied" : "Full price");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №5
-====================================================================
+Знак числа
+ВАРИАНТ 1
+========================================================================
+Ввод: одно вещественное число.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter a number");
-        double number=double.Parse(Console.ReadLine());
-        if (number>0)
-            Console.WriteLine("Positive");
-        else if (number<0)
-            Console.WriteLine("Negative");
-        else
-            Console.WriteLine("Zero");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double n = D();
+        Console.WriteLine(n > 0 ? "Positive" : n < 0 ? "Negative" : "Zero");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №6
-====================================================================
+Выбор блюда
+ВАРИАНТ 1
+========================================================================
+Ввод: номер блюда — целое число.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter menu choice (1-4):");
-        int choice=int.Parse(Console.ReadLine());
-        switch (choice)
-        {
-            case 1:
-                Console.WriteLine("Pizza-$10");
-                break;
-            case 2:
-                Console.WriteLine("Burger-$8");
-                break;
-            case 3:
-                Console.WriteLine("Pasta-$9");
-                break;
-            case 4:
-                Console.WriteLine("Salad-$6");
-                break;
-            default:
-                Console.WriteLine("Invalid choice");
-                break;       
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int k = I();
+        string[] a = { "Pizza-$10", "Burger-$8", "Pasta-$9", "Salad-$6" };
+        Console.WriteLine(k >= 1 && k <= 4 ? a[k - 1] : "Invalid choice");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №7
-====================================================================
+День недели
+ВАРИАНТ 1
+========================================================================
+Ввод: номер дня — целое число.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter a number from 1 to 7: ");
-        int day = int.Parse(Console.ReadLine());
-
-        switch (day)
-        {
-            case 1: Console.WriteLine("Monday"); break;
-            case 2: Console.WriteLine("Tuesday"); break;
-            case 3: Console.WriteLine("Wednesday"); break;
-            case 4: Console.WriteLine("Thursday"); break;
-            case 5: Console.WriteLine("Friday"); break;
-            case 6: Console.WriteLine("Saturday"); break;
-            case 7: Console.WriteLine("Sunday"); break;
-            default: Console.WriteLine("Invalid day"); break;
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int d = I();
+        string[] a = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+        Console.WriteLine(d >= 1 && d <= 7 ? a[d - 1] : "Invalid day");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №8
-====================================================================
+Цвет светофора
+ВАРИАНТ 1
+========================================================================
+Ввод: одно слово: red, yellow или green (регистр не важен).
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter light color: ");
-        string color = Console.ReadLine();
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string c = Next().ToLowerInvariant();
+        Console.WriteLine(c == "red" ? "Stop" : c == "yellow" ? "Wait" : c == "green" ? "Go" : "Invalid color");
+    }
 
-        switch (color.ToLower())
-        {
-            case "red":
-                Console.WriteLine("Stop");
-                break;
-            case "yellow":
-                Console.WriteLine("Wait");
-                break;
-            case "green":
-                Console.WriteLine("Go");
-                break;
-            default:
-                Console.WriteLine("Invalid color");
-                break;
-        }
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №9
-====================================================================
+Выбор интернет-тарифа
+ВАРИАНТ 1
+========================================================================
+Ввод: объём в ГБ — вещественное число.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter usage in GB: ");
-        double usage = double.Parse(Console.ReadLine());
-
-        if (usage < 5)
-            Console.WriteLine("Basic Plan");
-        else if (usage <= 15)
-            Console.WriteLine("Standard Plan");
-        else
-            Console.WriteLine("Premium Plan");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double x = D();
+        Console.WriteLine(x < 5 ? "Basic Plan" : x <= 15 ? "Standard Plan" : "Premium Plan");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №10
-====================================================================
+Стоимость электричества
+ВАРИАНТ 1
+========================================================================
+Ввод: число использованных единиц — вещественное число.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter units used: ");
-        double units = double.Parse(Console.ReadLine());
-
-        double cost;
-
-        if (units <= 100)
-            cost = units * 0.5;
-        else if (units <= 300)
-            cost = 100 * 0.5 + (units - 100) * 0.75;
-        else
-            cost = 100 * 0.5 + 200 * 0.75 + (units - 300) * 1.20;
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double n = D();
+        double cost = n <= 100 ? n * 0.5 : n <= 300 ? 50 + (n - 100) * 0.75 : 200 + (n - 300) * 1.20;
         Console.WriteLine("Total cost: " + cost);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №11
-====================================================================
+Оценка по баллам
+ВАРИАНТ 1
+========================================================================
+Ввод: целое число баллов; обычная область задачи 0–100.
+Примечание: Границы исходника сохранены буквально: значение больше 100 попадает в B; отрицательное — в Fail. Проверка допустимости баллов не добавлялась.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter marks: ");
-        int marks = int.Parse(Console.ReadLine());
-
-        if (marks >= 90 && marks <= 100)
-            Console.WriteLine("A");
-        else if (marks >= 75)
-            Console.WriteLine("B");
-        else if (marks >= 50)
-            Console.WriteLine("C");
-        else
-            Console.WriteLine("Fail");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I();
+        Console.WriteLine(n >= 90 && n <= 100 ? "A" : n >= 75 ? "B" : n >= 50 ? "C" : "Fail");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №12
-====================================================================
+Проверка пароля
+ВАРИАНТ 1
+========================================================================
+Ввод: пароль — целая строка.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        string correctPassword = "12345";
-
-        Console.Write("Enter password: ");
-        string password = Console.ReadLine();
-
-        if (password == correctPassword)
-            Console.WriteLine("Access Granted");
-        else
-            Console.WriteLine("Access Denied");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string p = Console.ReadLine();
+        Console.WriteLine(p == "12345" ? "Access Granted" : "Access Denied");
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №13
-====================================================================
+Проверка логина и пароля
+ВАРИАНТ 1
+========================================================================
+Ввод: логин — первая строка; пароль — вторая строка.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        string correctUsername = "admin";
-        string correctPassword = "12345";
-
-        Console.Write("Enter username: ");
-        string username = Console.ReadLine();
-
-        Console.Write("Enter password: ");
-        string password = Console.ReadLine();
-
-        if (username == correctUsername && password == correctPassword)
-            Console.WriteLine("Login successful");
-        else
-            Console.WriteLine("Error");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string u = Console.ReadLine(), p = Console.ReadLine();
+        Console.WriteLine(u == "admin" && p == "12345" ? "Login successful" : "Error");
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №14
-====================================================================
+Проверка PIN
+ВАРИАНТ 1
+========================================================================
+Ввод: PIN — целое число.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int pin = 1234;
-        int input = int.Parse(Console.ReadLine());
-
-        if (input == pin)
-        {
-            Console.WriteLine("Снятие денег разрешено");
-        }
-        else
-        {
-            Console.WriteLine("Неверный PIN-код. Доступ запрещён");
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        Console.WriteLine(I() == 1234 ? "Снятие денег разрешено" : "Неверный PIN-код. Доступ запрещён");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №15
-====================================================================
+Индекс массы тела
+ВАРИАНТ 1
+========================================================================
+Ввод: масса в кг и рост в метрах — вещественные числа; рост > 0.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter weigh (kg):");
-        double weigh=double.Parse(Console.ReadLine());
-        Console.Write("Enter height (m):");
-        double height=double.Parse(Console.ReadLine());
-        double bmi=weigh/(height*height);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double w = D(), h = D();
+        double bmi = w / (h * h);
         Console.WriteLine("BMI: " + bmi.ToString("F2"));
-        if (bmi < 18.5)
-            Console.WriteLine("Underweight");
-        else if (bmi<25)
-            Console.WriteLine("Normal");
-        else
-            Console.WriteLine("Overweight");
+        Console.WriteLine(bmi < 18.5 ? "Underweight" : bmi < 25 ? "Normal" : "Overweight");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №16
-====================================================================
+Калькулятор с проверкой операции
+ВАРИАНТ 1
+========================================================================
+Ввод: два вещественных числа, затем знак +, -, * или /.
+Примечание: Порядок ввода: a b знак, а не a знак b.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter first number: ");
-        double a = double.Parse(Console.ReadLine());
-
-        Console.Write("Enter second number: ");
-        double b = double.Parse(Console.ReadLine());
-
-        Console.Write("Enter operator: ");
-        string op = Console.ReadLine();
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double a = D(), b = D();
+        string op = Next();
         switch (op)
         {
-            case "+":
-                Console.WriteLine(a + b);
-                break;
-
-            case "-":
-                Console.WriteLine(a - b);
-                break;
-
-            case "*":
-                Console.WriteLine(a * b);
-                break;
-
+            case "+": Console.WriteLine(a + b); break;
+            case "-": Console.WriteLine(a - b); break;
+            case "*": Console.WriteLine(a * b); break;
             case "/":
-                if (b != 0)
-                    Console.WriteLine(a / b);
-                else
-                    Console.WriteLine("Cannot divide by zero");
+                if (b != 0) Console.WriteLine(a / b);
+                else Console.WriteLine("Cannot divide by zero");
                 break;
-
-            default:
-                Console.WriteLine("Invalid operator");
-                break;
+            default: Console.WriteLine("Invalid operator"); break;
         }
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №17
-====================================================================
+Скидка на корзину
+ВАРИАНТ 1
+========================================================================
+Ввод: сумма покупки — вещественное число.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter cart total: ");
-        double total = double.Parse(Console.ReadLine());
-
-        double discount;
-
-        if (total > 100)
-            discount = 20;
-        else if (total > 50)
-            discount = 10;
-        else
-            discount = 0;
-
-        double finalPrice = total - total * discount / 100;
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double total = D();
+        double discount = total > 100 ? 20 : total > 50 ? 10 : 0;
         Console.WriteLine("Discount: " + discount + "%");
-        Console.WriteLine("Final price: " + finalPrice);
+        Console.WriteLine("Final price: " + (total - total * discount / 100));
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №18
-====================================================================
+Допуск по посещаемости
+ВАРИАНТ 1
+========================================================================
+Ввод: общее число занятий, затем посещённое; оба целые, общее > 0.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter total classes: ");
-        int totalClasses = int.Parse(Console.ReadLine());
-
-        Console.Write("Enter attended classes: ");
-        int attendedClasses = int.Parse(Console.ReadLine());
-
-        double attendance = (double)attendedClasses / totalClasses * 100;
-
-        if (attendance >= 75)
-            Console.WriteLine("Eligible");
-        else
-            Console.WriteLine("Not eligible");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int total = I(), attended = I();
+        double percent = (double)attended / total * 100;
+        Console.WriteLine(percent >= 75 ? "Eligible" : "Not eligible");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №19
-====================================================================
+Цена места по категории
+ВАРИАНТ 1
+========================================================================
+Ввод: одно слово: vip, standard или economy (регистр не важен).
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter seat category: ");
-        string category = Console.ReadLine();
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string s = Next().ToLowerInvariant();
+        Console.WriteLine(s == "vip" ? "Price: 100" : s == "standard" ? "Price: 60" : s == "economy" ? "Price: 30" : "Invalid category");
+    }
 
-        switch (category.ToLower())
-        {
-            case "vip":
-                Console.WriteLine("Price: 100");
-                break;
-
-            case "standard":
-                Console.WriteLine("Price: 60");
-                break;
-
-            case "economy":
-                Console.WriteLine("Price: 30");
-                break;
-
-            default:
-                Console.WriteLine("Invalid category");
-                break;
-        }
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №3 — ЗАДАНИЕ №20
-====================================================================
+Скидка по количеству дней
+ВАРИАНТ 1
+========================================================================
+Ввод: количество дней — целое, затем обычная цена — вещественное.
+Примечание: Цена уменьшается один раз на процент скидки. Умножение на количество дней не добавлено: его нет в исходнике.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter number of days: ");
-        int days = int.Parse(Console.ReadLine());
-
-        Console.Write("Enter normal price: ");
-        double price = double.Parse(Console.ReadLine());
-
-        double discount;
-
-        if (days <= 3)
-            discount = 0;
-        else if (days <= 7)
-            discount = 10;
-        else
-            discount = 20;
-
-        double finalPrice = price - price * discount / 100;
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int days = I();
+        double price = D();
+        double discount = days <= 3 ? 0 : days <= 7 ? 10 : 20;
         Console.WriteLine("Discount: " + discount + "%");
-        Console.WriteLine("Final price: " + finalPrice);
+        Console.WriteLine("Final price: " + (price - price * discount / 100));
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №1
-====================================================================
+Числа от 1 до 20
+ВАРИАНТ 1
+========================================================================
+Ввод: нет.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        for(int i=1; i<=20; i++)
-        {
-            Console.WriteLine(i);
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        for (int i = 1; i <= 20; i++) Console.WriteLine(i);
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №2
-====================================================================
+Чётные числа от 2 до 50
+ВАРИАНТ 1
+========================================================================
+Ввод: нет.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        for(int i=2; i<=50; i+=2)
-        {
-            Console.WriteLine(i);
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        for (int i = 2; i <= 50; i += 2) Console.WriteLine(i);
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №3
-====================================================================
+Сумма от 1 до n
+ВАРИАНТ 1
+========================================================================
+Ввод: целое n.
+Примечание: Вариант 1 использует формулу за O(1), вариант 2 сохраняет цикл O(n). При n <= 0 оба выводят 0, как исходник.
+
+```csharp
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter n:");
-        int n=int.Parse(Console.ReadLine());
-        int sum=0;
-        for (int i=1; i<=n; i++)
-        {
-            sum +=i;
-        }
-        Console.WriteLine(sum);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        long n = I();
+        Console.WriteLine(n > 0 ? n * (n + 1) / 2 : 0);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №4
-====================================================================
+Таблица умножения заданного числа
+ВАРИАНТ 1
+========================================================================
+Ввод: одно целое число.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter x: ");
-        int x = int.Parse(Console.ReadLine());
-
-        for (int i = 1; i <= 10; i++)
-        {
-            Console.WriteLine(x + " * " + i + " = " + x * i);
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I();
+        for (int i = 1; i <= 10; i++) Console.WriteLine($"{n} * {i} = {(long)n * i}");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №5
-====================================================================
+Факториал
+ВАРИАНТ 1
+========================================================================
+Ввод: целое n >= 0.
+Примечание: В обоих вариантах BigInteger предотвращает переполнение int (у исходника оно начинается с 13!). 0! = 1; при отрицательном n сохранён результат исходного пустого цикла: 1.
+
+```csharp
 using System;
+using System.Globalization;
+using System.Numerics;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter n: ");
-        int n = int.Parse(Console.ReadLine());
-
-        int factorial = 1;
-
-        for (int i = 1; i <= n; i++)
-        {
-            factorial *= i;
-        }
-
-        Console.WriteLine(factorial);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I();
+        BigInteger f = BigInteger.One;
+        for (long i = 2; i <= n; i++) f *= i;
+        Console.WriteLine(f);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №6
-====================================================================
+Обратный отсчёт
+ВАРИАНТ 1
+========================================================================
+Ввод: целое n.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter n: ");
-        int n = int.Parse(Console.ReadLine());
-
-        for (int i = n; i >= 1; i--)
-        {
-            Console.WriteLine(i);
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        for (int n = I(); n > 0; n--) Console.WriteLine(n);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №7
-====================================================================
+Сумма цифр
+ВАРИАНТ 1
+========================================================================
+Ввод: одно целое число.
+Примечание: Для n <= 0 сохранён исходный результат 0; модуль отрицательного числа не берётся.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter number: ");
-        int n = int.Parse(Console.ReadLine());
-
-        int sum = 0;
-
-        while (n > 0)
-        {
-            sum += n % 10;
-            n /= 10;
-        }
-
-        Console.WriteLine(sum);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I(), s = 0;
+        while (n > 0) { s += n % 10; n /= 10; }
+        Console.WriteLine(s);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №8
-====================================================================
+Количество цифр
+ВАРИАНТ 1
+========================================================================
+Ввод: одно целое число.
+Примечание: Для n <= 0 сохранён исходный результат 0. В частности, у нуля здесь 0 цифр по логике исходного цикла.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter number: ");
-        int n = int.Parse(Console.ReadLine());
-
-        int count = 0;
-
-        while (n > 0)
-        {
-            n /= 10;
-            count++;
-        }
-
-        Console.WriteLine(count);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I(), k = 0;
+        while (n > 0) { n /= 10; k++; }
+        Console.WriteLine(k);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №9
-====================================================================
+Пять чисел в обратном порядке
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно пять целых чисел.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[5];
-
-        for (int i = 0; i < 5; i++)
-        {
-            numbers[i] = int.Parse(Console.ReadLine());
-        }
-
-        for (int i = 4; i >= 0; i--)
-        {
-            Console.WriteLine(numbers[i]);
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = new int[5];
+        for (int i = 0; i < 5; i++) a[i] = I();
+        for (int i = 4; i >= 0; i--) Console.WriteLine(a[i]);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №10
-====================================================================
+Подсчёт положительных, отрицательных и нулей
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно десять целых чисел.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        int positive = 0;
-        int negative = 0;
-        int zero = 0;
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int p = 0, m = 0, z = 0;
         for (int i = 0; i < 10; i++)
         {
-            numbers[i] = int.Parse(Console.ReadLine());
-
-            if (numbers[i] > 0)
-                positive++;
-            else if (numbers[i] < 0)
-                negative++;
-            else
-                zero++;
+            int x = I();
+            if (x > 0) p++; else if (x < 0) m++; else z++;
         }
-
-        Console.WriteLine("Positive: " + positive);
-        Console.WriteLine("Negative: " + negative);
-        Console.WriteLine("Zero: " + zero);
+        Console.WriteLine("Positive: " + p);
+        Console.WriteLine("Negative: " + m);
+        Console.WriteLine("Zero: " + z);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №11
-====================================================================
+Первые n чисел Фибоначчи
+ВАРИАНТ 1
+========================================================================
+Ввод: целое n — количество членов, начиная с 0.
+Примечание: В обоих вариантах BigInteger предотвращает переполнение. Как в исходнике: после каждого числа пробел, в конце нет перевода строки; n <= 0 даёт пустой вывод.
+
+```csharp
 using System;
+using System.Globalization;
+using System.Numerics;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter n: ");
-        int n = int.Parse(Console.ReadLine());
-
-        int a = 0;
-        int b = 1;
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I();
+        BigInteger a = 0, b = 1;
         for (int i = 0; i < n; i++)
         {
             Console.Write(a + " ");
-
-            int c = a + b;
-            a = b;
-            b = c;
+            BigInteger c = a + b; a = b; b = c;
         }
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №12
-====================================================================
+Проверка простоты
+ВАРИАНТ 1
+========================================================================
+Ввод: одно целое число.
+Примечание: Вариант 1 проверяет делители до квадратного корня за O(sqrt(n)); вариант 2 сохраняет перебор исходника до n за O(n).
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter number: ");
-        int n = int.Parse(Console.ReadLine());
-
-        bool prime = true;
-
-        if (n < 2)
-        {
-            prime = false;
-        }
-
-        for (int i = 2; i < n; i++)
-        {
-            if (n % i == 0)
-            {
-                prime = false;
-                break;
-            }
-        }
-
-        if (prime)
-            Console.WriteLine("Prime");
-        else
-            Console.WriteLine("Not prime");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I();
+        bool prime = n >= 2;
+        for (int d = 2; prime && d <= n / d; d++)
+            if (n % d == 0) prime = false;
+        Console.WriteLine(prime ? "Prime" : "Not prime");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №13
-====================================================================
+Таблица умножения 10 × 10
+ВАРИАНТ 1
+========================================================================
+Ввод: нет.
+Примечание: Табуляции, в том числе после последнего числа строки, сохранены.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         for (int i = 1; i <= 10; i++)
         {
-            for (int j = 1; j <= 10; j++)
-            {
-                Console.Write(i * j + "\t");
-            }
+            for (int j = 1; j <= 10; j++) Console.Write(i * j + "\t");
             Console.WriteLine();
         }
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №14
-====================================================================
+Сумма элементов матрицы 3 × 3
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно девять целых чисел, по строкам матрицы.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[,] a = new int[3, 3];
-        int sum = 0;
-
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                a[i, j] = int.Parse(Console.ReadLine());
-                sum += a[i, j];
-            }
-        }
-
-        Console.WriteLine(sum);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        long s = 0;
+        for (int i = 0; i < 9; i++) s += I();
+        Console.WriteLine(s);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №15
-====================================================================
+Суммы строк матрицы 3 × 3
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно девять целых чисел, по строкам матрицы.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[,] a = new int[3, 3];
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         for (int i = 0; i < 3; i++)
         {
-            for (int j = 0; j < 3; j++)
-            {
-                a[i, j] = int.Parse(Console.ReadLine());
-            }
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            int sum = 0;
-            for (int j = 0; j < 3; j++)
-            {
-                sum += a[i, j];
-            }
-            Console.WriteLine(sum);
+            long s = 0;
+            for (int j = 0; j < 3; j++) s += I();
+            Console.WriteLine(s);
         }
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №16
-====================================================================
+Возрастающий треугольник из звёздочек
+ВАРИАНТ 1
+========================================================================
+Ввод: целое n — количество строк.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int n = int.Parse(Console.ReadLine());
-
-        for (int i = 1; i <= n; i++)
-        {
-            for (int j = 1; j <= i; j++)
-            {
-                Console.Write("*");
-            }
-            Console.WriteLine();
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I();
+        for (long i = 1; i <= n; i++) Console.WriteLine(new string('*', (int)i));
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №17
-====================================================================
+Числовой треугольник
+ВАРИАНТ 1
+========================================================================
+Ввод: целое n — количество строк.
+Примечание: Числа в строке соединены без разделителей: строка 10 заканчивается на 8910, как в исходнике.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int n = int.Parse(Console.ReadLine());
-
-        for (int i = 1; i <= n; i++)
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I();
+        for (long i = 1; i <= n; i++)
         {
-            for (int j = 1; j <= i; j++)
-            {
-                Console.Write(j);
-            }
+            for (long j = 1; j <= i; j++) Console.Write(j);
             Console.WriteLine();
         }
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №18
-====================================================================
+Убывающий треугольник из звёздочек
+ВАРИАНТ 1
+========================================================================
+Ввод: целое n — количество строк.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int n = int.Parse(Console.ReadLine());
-
-        for (int i = n; i >= 1; i--)
-        {
-            for (int j = 1; j <= i; j++)
-            {
-                Console.Write("*");
-            }
-            Console.WriteLine();
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        for (int n = I(); n > 0; n--) Console.WriteLine(new string('*', n));
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №19
-====================================================================
+Главная диагональ матрицы 3 × 3
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно девять целых чисел, по строкам матрицы.
+Примечание: После каждого элемента пробел; завершающего перевода строки нет, как в исходнике.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[,] a = new int[3, 3];
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         for (int i = 0; i < 3; i++)
-        {
             for (int j = 0; j < 3; j++)
             {
-                a[i, j] = int.Parse(Console.ReadLine());
+                int x = I();
+                if (i == j) Console.Write(x + " ");
             }
-        }
-
-        for (int i = 0; i < 3; i++)
-        {
-            Console.Write(a[i, i] + " ");
-        }
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №4 — ЗАДАНИЕ №20
-====================================================================
+Проверка магического квадрата
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно девять целых чисел, по строкам матрицы.
+Примечание: Сравниваются только суммы строк, столбцов и диагоналей. Различность элементов и набор чисел 1–9 не проверяются, как в исходнике.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[,] a = new int[3, 3];
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        long[] rows = new long[3], cols = new long[3];
+        long d1 = 0, d2 = 0;
         for (int i = 0; i < 3; i++)
-        {
             for (int j = 0; j < 3; j++)
             {
-                a[i, j] = int.Parse(Console.ReadLine());
+                int x = I();
+                rows[i] += x; cols[j] += x;
+                if (i == j) d1 += x;
+                if (i + j == 2) d2 += x;
             }
-        }
-
-        int sum = 0;
-        for (int j = 0; j < 3; j++)
-        {
-            sum += a[0, j];
-        }
-
-        bool magic = true;
-
-        // Проверка строк
-        for (int i = 0; i < 3; i++)
-        {
-            int s = 0;
-            for (int j = 0; j < 3; j++)
-            {
-                s += a[i, j];
-            }
-            if (s != sum)
-                magic = false;
-        }
-
-        // Проверка столбцов
-        for (int j = 0; j < 3; j++)
-        {
-            int s = 0;
-            for (int i = 0; i < 3; i++)
-            {
-                s += a[i, j];
-            }
-            if (s != sum)
-                magic = false;
-        }
-
-        // Проверка диагоналей
-        int d1 = 0;
-        int d2 = 0;
-        for (int i = 0; i < 3; i++)
-        {
-            d1 += a[i, i];
-            d2 += a[i, 2 - i];
-        }
-
-        if (d1 != sum || d2 != sum)
-        {
-            magic = false;
-        }
-
-        if (magic)
-            Console.WriteLine("Magic square");
-        else
-            Console.WriteLine("Not a magic square");
+        long target = rows[0];
+        bool ok = d1 == target && d2 == target;
+        for (int i = 0; i < 3; i++) ok &= rows[i] == target && cols[i] == target;
+        Console.WriteLine(ok ? "Magic square" : "Not a magic square");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №1
-====================================================================
+Ввод и вывод массива
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно десять целых чисел.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            numbers[i] = int.Parse(Console.ReadLine());
-        }
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            Console.WriteLine(numbers[i]);
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = new int[10];
+        for (int i = 0; i < 10; i++) a[i] = I();
+        for (int i = 0; i < 10; i++) Console.WriteLine(a[i]);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №2
-====================================================================
+Максимум, минимум и их индексы
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно десять целых чисел.
+Примечание: Индексы с нуля; при повторениях выбирается первое вхождение.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        for (int i = 0; i < numbers.Length; i++)
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = new int[10];
+        for (int i = 0; i < 10; i++) a[i] = I();
+        int mx = 0, mn = 0;
+        for (int i = 1; i < 10; i++)
         {
-            numbers[i] = int.Parse(Console.ReadLine());
+            if (a[i] > a[mx]) mx = i;
+            if (a[i] < a[mn]) mn = i;
         }
-
-        int maxIndex = 0;
-        int minIndex = 0;
-
-        for (int i = 1; i < numbers.Length; i++)
-        {
-            if (numbers[i] > numbers[maxIndex])
-            {
-                maxIndex = i;
-            }
-            if (numbers[i] < numbers[minIndex])
-            {
-                minIndex = i;
-            }
-        }
-
-        Console.WriteLine($"Ең үлкен мән: {numbers[maxIndex]}, индексі: {maxIndex}");
-        Console.WriteLine($"Ең кіші мән: {numbers[minIndex]}, индексі: {minIndex}");
+        Console.WriteLine($"Ең үлкен мән: {a[mx]}, индексі: {mx}");
+        Console.WriteLine($"Ең кіші мән: {a[mn]}, индексі: {mn}");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №3
-====================================================================
+Сортировка фиксированного массива по возрастанию
+ВАРИАНТ 1
+========================================================================
+Ввод: нет; массив задан в программе: 5, 2, 9, 1, 7, 3.
+Примечание: Вариант 1 использует Array.Sort за O(n log n), вариант 2 сохраняет пузырьковую сортировку O(n²). Ввод размера и массива не добавлен.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = { 5, 2, 9, 1, 7, 3 };
-
-        for (int i = 0; i < numbers.Length - 1; i++)
-        {
-            for (int j = 0; j < numbers.Length - 1 - i; j++)
-            {
-                if (numbers[j] > numbers[j + 1])
-                {
-                    int temp = numbers[j];
-                    numbers[j] = numbers[j + 1];
-                    numbers[j + 1] = temp;
-                }
-            }
-        }
-
-        Console.WriteLine(string.Join(" ", numbers));
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = { 5, 2, 9, 1, 7, 3 };
+        Array.Sort(a);
+        Console.WriteLine(string.Join(" ", a));
     }
 }
+```
 
-====================================================================
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №4
-====================================================================
+Элементы выше среднего
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно десять целых чисел.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-        int sum = 0;
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            numbers[i] = int.Parse(Console.ReadLine());
-            sum += numbers[i];
-        }
-
-        double average = (double)sum / numbers.Length;
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            if (numbers[i] > average)
-            {
-                Console.WriteLine(numbers[i]);
-            }
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = new int[10];
+        for (int i = 0; i < 10; i++) a[i] = I();
+        long sum = 0;
+        for (int i = 0; i < 10; i++) sum += a[i];
+        double avg = (double)sum / 10;
+        for (int i = 0; i < 10; i++)
+            if (a[i] > avg) Console.WriteLine(a[i]);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №5
-====================================================================
+Обмен максимального и минимального элементов
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно десять целых чисел.
+Примечание: Меняются первые вхождения максимума и минимума. Для массива одинаковых чисел результат не меняется.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        for (int i = 0; i < numbers.Length; i++)
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = new int[10];
+        for (int i = 0; i < 10; i++) a[i] = I();
+        int mx = 0, mn = 0;
+        for (int i = 1; i < 10; i++)
         {
-            numbers[i] = int.Parse(Console.ReadLine());
+            if (a[i] > a[mx]) mx = i;
+            if (a[i] < a[mn]) mn = i;
         }
-
-        int maxIndex = 0;
-        int minIndex = 0;
-
-        for (int i = 1; i < numbers.Length; i++)
-        {
-            if (numbers[i] > numbers[maxIndex])
-            {
-                maxIndex = i;
-            }
-            if (numbers[i] < numbers[minIndex])
-            {
-                minIndex = i;
-            }
-        }
-
-        int temp = numbers[maxIndex];
-        numbers[maxIndex] = numbers[minIndex];
-        numbers[minIndex] = temp;
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            Console.WriteLine(numbers[i]);
-        }
+        int t = a[mx]; a[mx] = a[mn]; a[mn] = t;
+        for (int i = 0; i < 10; i++) Console.WriteLine(a[i]);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №6
-====================================================================
+Количество чётных и нечётных
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно десять целых чисел.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-        int evenCount = 0;
-        int oddCount = 0;
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            numbers[i] = int.Parse(Console.ReadLine());
-            
-            if (numbers[i] % 2 == 0)
-            {
-                evenCount++;
-            }
-            else
-            {
-                oddCount++;
-            }
-        }
-
-        Console.WriteLine($"Жұп сандар саны: {evenCount}");
-        Console.WriteLine($"Тақ сандар саны: {oddCount}");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int even = 0;
+        for (int i = 0; i < 10; i++) if (I() % 2 == 0) even++;
+        Console.WriteLine($"Жұп сандар саны: {even}");
+        Console.WriteLine($"Тақ сандар саны: {10 - even}");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №7
-====================================================================
+Разворот массива
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно десять целых чисел.
+Примечание: Вариант 2 сохраняет разворот обменами с двух концов массива.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            numbers[i] = int.Parse(Console.ReadLine());
-        }
-
-        int left = 0;
-        int right = numbers.Length - 1;
-
-        while (left < right)
-        {
-            int temp = numbers[left];
-            numbers[left] = numbers[right];
-            numbers[right] = temp;
-            left++;
-            right--;
-        }
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            Console.WriteLine(numbers[i]);
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = new int[10];
+        for (int i = 0; i < 10; i++) a[i] = I();
+        Array.Reverse(a);
+        for (int i = 0; i < 10; i++) Console.WriteLine(a[i]);
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №8
-====================================================================
+Линейный поиск
+ВАРИАНТ 1
+========================================================================
+Ввод: десять целых элементов массива, затем искомое целое число.
+Примечание: Выводится индекс первого вхождения, индексация с нуля.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            numbers[i] = int.Parse(Console.ReadLine());
-        }
-
-        int target = int.Parse(Console.ReadLine());
-        int index = -1;
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            if (numbers[i] == target)
-            {
-                index = i;
-                break;
-            }
-        }
-
-        if (index != -1)
-        {
-            Console.WriteLine($"Found it at index {index}!");
-        }
-        else
-        {
-            Console.WriteLine("Not here!");
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = new int[10];
+        for (int i = 0; i < 10; i++) a[i] = I();
+        int target = I(), at = -1;
+        for (int i = 0; i < 10; i++)
+            if (a[i] == target) { at = i; break; }
+        Console.WriteLine(at >= 0 ? $"Found it at index {at}!" : "Not here!");
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №9
-====================================================================
+Суммы соседних элементов
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно десять целых чисел.
+Примечание: Результат — девять сумм, каждая с новой строки.
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        for (int i = 0; i < numbers.Length; i++)
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int prev = I();
+        for (int i = 1; i < 10; i++)
         {
-            numbers[i] = int.Parse(Console.ReadLine());
-        }
-
-        int[] sums = new int[numbers.Length - 1];
-
-        for (int i = 0; i < sums.Length; i++)
-        {
-            sums[i] = numbers[i] + numbers[i + 1];
-        }
-
-        for (int i = 0; i < sums.Length; i++)
-        {
-            Console.WriteLine(sums[i]);
+            int x = I();
+            Console.WriteLine((long)prev + x);
+            prev = x;
         }
     }
-}
 
-====================================================================
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+}
+```
+
+
+========================================================================
 ЛАБОРАТОРНАЯ №5 — ЗАДАНИЕ №10
-====================================================================
+Сортировка массива по убыванию
+ВАРИАНТ 1
+========================================================================
+Ввод: ровно десять целых чисел.
+Примечание: Вариант 1: O(n log n), вариант 2: исходная пузырьковая сортировка O(n²).
+
+```csharp
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            numbers[i] = int.Parse(Console.ReadLine());
-        }
-
-        for (int i = 0; i < numbers.Length - 1; i++)
-        {
-            for (int j = 0; j < numbers.Length - 1 - i; j++)
-            {
-                if (numbers[j] < numbers[j + 1])
-                {
-                    int temp = numbers[j];
-                    numbers[j] = numbers[j + 1];
-                    numbers[j + 1] = temp;
-                }
-            }
-        }
-
-        for (int i = 0; i < numbers.Length; i++)
-        {
-            Console.WriteLine(numbers[i]);
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = new int[10];
+        for (int i = 0; i < 10; i++) a[i] = I();
+        Array.Sort(a);
+        for (int i = 9; i >= 0; i--) Console.WriteLine(a[i]);
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }
+```

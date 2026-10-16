@@ -1,26 +1,30 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        for (int i = 0; i < numbers.Length; i++)
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int prev = I();
+        for (int i = 1; i < 10; i++)
         {
-            numbers[i] = int.Parse(Console.ReadLine());
-        }
-
-        int[] sums = new int[numbers.Length - 1];
-
-        for (int i = 0; i < sums.Length; i++)
-        {
-            sums[i] = numbers[i] + numbers[i + 1];
-        }
-
-        for (int i = 0; i < sums.Length; i++)
-        {
-            Console.WriteLine(sums[i]);
+            int x = I();
+            Console.WriteLine((long)prev + x);
+            prev = x;
         }
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

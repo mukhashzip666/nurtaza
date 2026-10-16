@@ -1,29 +1,32 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        int positive = 0;
-        int negative = 0;
-        int zero = 0;
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int p = 0, m = 0, z = 0;
         for (int i = 0; i < 10; i++)
         {
-            numbers[i] = int.Parse(Console.ReadLine());
-
-            if (numbers[i] > 0)
-                positive++;
-            else if (numbers[i] < 0)
-                negative++;
-            else
-                zero++;
+            int x = I();
+            if (x > 0) p++; else if (x < 0) m++; else z++;
         }
-
-        Console.WriteLine("Positive: " + positive);
-        Console.WriteLine("Negative: " + negative);
-        Console.WriteLine("Zero: " + zero);
+        Console.WriteLine("Positive: " + p);
+        Console.WriteLine("Negative: " + m);
+        Console.WriteLine("Zero: " + z);
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

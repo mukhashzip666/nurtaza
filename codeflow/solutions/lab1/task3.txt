@@ -1,15 +1,13 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter your name: ");
-        string name = Console.ReadLine();
-
-        Console.Write("Enter your age: ");
-        int age = Convert.ToInt32(Console.ReadLine());
-
-        Console.WriteLine($"Your name is {name} and you are {age} years old.");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string s = Console.ReadLine();
+        int a = int.Parse(Console.ReadLine());
+        Console.WriteLine($"Your name is {s} and you are {a} years old.");
     }
 }

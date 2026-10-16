@@ -1,20 +1,26 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter number: ");
-        int n = int.Parse(Console.ReadLine());
-
-        int sum = 0;
-
-        while (n > 0)
-        {
-            sum += n % 10;
-            n /= 10;
-        }
-
-        Console.WriteLine(sum);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I(), s = 0;
+        while (n > 0) { s += n % 10; n /= 10; }
+        Console.WriteLine(s);
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

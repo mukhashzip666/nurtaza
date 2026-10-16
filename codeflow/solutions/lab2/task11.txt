@@ -1,9 +1,13 @@
 using System;
+using System.Globalization;
 
-class Program {
-    static void Main() {
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         string s = "123.45";
-        double d = Convert.ToDouble(s);
-        Console.WriteLine(d * 2);
+        double x = double.Parse(s, CultureInfo.InvariantCulture);
+        Console.WriteLine(x * 2);
     }
 }

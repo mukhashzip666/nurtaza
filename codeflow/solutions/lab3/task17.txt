@@ -1,24 +1,27 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter cart total: ");
-        double total = double.Parse(Console.ReadLine());
-
-        double discount;
-
-        if (total > 100)
-            discount = 20;
-        else if (total > 50)
-            discount = 10;
-        else
-            discount = 0;
-
-        double finalPrice = total - total * discount / 100;
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double total = D();
+        double discount = total > 100 ? 20 : total > 50 ? 10 : 0;
         Console.WriteLine("Discount: " + discount + "%");
-        Console.WriteLine("Final price: " + finalPrice);
+        Console.WriteLine("Final price: " + (total - total * discount / 100));
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

@@ -1,22 +1,26 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter a number from 1 to 7: ");
-        int day = int.Parse(Console.ReadLine());
-
-        switch (day)
-        {
-            case 1: Console.WriteLine("Monday"); break;
-            case 2: Console.WriteLine("Tuesday"); break;
-            case 3: Console.WriteLine("Wednesday"); break;
-            case 4: Console.WriteLine("Thursday"); break;
-            case 5: Console.WriteLine("Friday"); break;
-            case 6: Console.WriteLine("Saturday"); break;
-            case 7: Console.WriteLine("Sunday"); break;
-            default: Console.WriteLine("Invalid day"); break;
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int d = I();
+        string[] a = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+        Console.WriteLine(d >= 1 && d <= 7 ? a[d - 1] : "Invalid day");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

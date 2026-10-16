@@ -1,9 +1,25 @@
 using System;
+using System.Globalization;
 
-class Program {
-    static void Main() {
-        bool a = Convert.ToBoolean(int.Parse(Console.ReadLine()));
-        bool b = Convert.ToBoolean(int.Parse(Console.ReadLine()));
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        bool a = I() != 0, b = I() != 0;
         Console.WriteLine($"{a && b} {a || b} {a ^ b} {!a}");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

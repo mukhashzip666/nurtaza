@@ -1,12 +1,12 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Введите ваше имя: ");
-        string name = Console.ReadLine();
-
-        Console.WriteLine("Hello, " + name + "! Nice to meet you.");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string s = Console.ReadLine();
+        Console.WriteLine("Hello, " + s + "! Nice to meet you.");
     }
 }

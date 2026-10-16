@@ -1,17 +1,12 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        string correctPassword = "12345";
-
-        Console.Write("Enter password: ");
-        string password = Console.ReadLine();
-
-        if (password == correctPassword)
-            Console.WriteLine("Access Granted");
-        else
-            Console.WriteLine("Access Denied");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        string p = Console.ReadLine();
+        Console.WriteLine(p == "12345" ? "Access Granted" : "Access Denied");
     }
 }

@@ -1,32 +1,33 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        int[] numbers = new int[10];
-
-        for (int i = 0; i < numbers.Length; i++)
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int[] a = new int[10];
+        for (int i = 0; i < 10; i++) a[i] = I();
+        int mx = 0, mn = 0;
+        for (int i = 1; i < 10; i++)
         {
-            numbers[i] = int.Parse(Console.ReadLine());
+            if (a[i] > a[mx]) mx = i;
+            if (a[i] < a[mn]) mn = i;
         }
-
-        int maxIndex = 0;
-        int minIndex = 0;
-
-        for (int i = 1; i < numbers.Length; i++)
-        {
-            if (numbers[i] > numbers[maxIndex])
-            {
-                maxIndex = i;
-            }
-            if (numbers[i] < numbers[minIndex])
-            {
-                minIndex = i;
-            }
-        }
-
-        Console.WriteLine($"Ең үлкен мән: {numbers[maxIndex]}, индексі: {maxIndex}");
-        Console.WriteLine($"Ең кіші мән: {numbers[minIndex]}, индексі: {minIndex}");
+        Console.WriteLine($"Ең үлкен мән: {a[mx]}, индексі: {mx}");
+        Console.WriteLine($"Ең кіші мән: {a[mn]}, индексі: {mn}");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

@@ -1,15 +1,25 @@
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter a number");
-        double number=double.Parse(Console.ReadLine());
-        if (number>0)
-            Console.WriteLine("Positive");
-        else if (number<0)
-            Console.WriteLine("Negative");
-        else
-            Console.WriteLine("Zero");
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        double n = D();
+        Console.WriteLine(n > 0 ? "Positive" : n < 0 ? "Negative" : "Zero");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

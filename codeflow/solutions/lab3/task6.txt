@@ -1,27 +1,26 @@
 using System;
+using System.Globalization;
+
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter menu choice (1-4):");
-        int choice=int.Parse(Console.ReadLine());
-        switch (choice)
-        {
-            case 1:
-                Console.WriteLine("Pizza-$10");
-                break;
-            case 2:
-                Console.WriteLine("Burger-$8");
-                break;
-            case 3:
-                Console.WriteLine("Pasta-$9");
-                break;
-            case 4:
-                Console.WriteLine("Salad-$6");
-                break;
-            default:
-                Console.WriteLine("Invalid choice");
-                break;       
-        }
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int k = I();
+        string[] a = { "Pizza-$10", "Burger-$8", "Pasta-$9", "Salad-$6" };
+        Console.WriteLine(k >= 1 && k <= 4 ? a[k - 1] : "Invalid choice");
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }

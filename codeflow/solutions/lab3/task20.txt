@@ -1,27 +1,29 @@
 using System;
+using System.Globalization;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter number of days: ");
-        int days = int.Parse(Console.ReadLine());
-
-        Console.Write("Enter normal price: ");
-        double price = double.Parse(Console.ReadLine());
-
-        double discount;
-
-        if (days <= 3)
-            discount = 0;
-        else if (days <= 7)
-            discount = 10;
-        else
-            discount = 20;
-
-        double finalPrice = price - price * discount / 100;
-
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int days = I();
+        double price = D();
+        double discount = days <= 3 ? 0 : days <= 7 ? 10 : 20;
         Console.WriteLine("Discount: " + discount + "%");
-        Console.WriteLine("Final price: " + finalPrice);
+        Console.WriteLine("Final price: " + (price - price * discount / 100));
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
+    static double D() { return double.Parse(Next(), CultureInfo.InvariantCulture); }
 }

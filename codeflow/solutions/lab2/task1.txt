@@ -1,7 +1,11 @@
 using System;
+using System.Globalization;
 
-class Program {
-    static void Main() {
+class Program
+{
+    static void Main()
+    {
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         int a = 5;
         double b = 3.14;
         char c = 'A';

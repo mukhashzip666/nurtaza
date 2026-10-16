@@ -1,19 +1,28 @@
 using System;
+using System.Globalization;
+using System.Numerics;
 
 class Program
 {
     static void Main()
     {
-        Console.Write("Enter n: ");
-        int n = int.Parse(Console.ReadLine());
-
-        int factorial = 1;
-
-        for (int i = 1; i <= n; i++)
-        {
-            factorial *= i;
-        }
-
-        Console.WriteLine(factorial);
+        CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
+        int n = I();
+        BigInteger f = BigInteger.One;
+        for (long i = 2; i <= n; i++) f *= i;
+        Console.WriteLine(f);
     }
+
+    static readonly System.IO.StreamReader Input = new System.IO.StreamReader(Console.OpenStandardInput());
+    static string Next()
+    {
+        int c;
+        do { c = Input.Read(); } while (c >= 0 && char.IsWhiteSpace((char)c));
+        if (c < 0) throw new System.IO.EndOfStreamException();
+        var s = new System.Text.StringBuilder();
+        do { s.Append((char)c); c = Input.Read(); }
+        while (c >= 0 && !char.IsWhiteSpace((char)c));
+        return s.ToString();
+    }
+    static int I() { return int.Parse(Next(), CultureInfo.InvariantCulture); }
 }
