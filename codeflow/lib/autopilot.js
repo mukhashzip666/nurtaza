@@ -20,13 +20,15 @@ export function createAutopilot({ store, inspect, action, type, typing, stopTypi
     if (['typing', 'paused'].includes((await typing()).status)) throw new Error('Дождитесь окончания печати.');
     return save({ status: 'active', phase: 'prepare', ...task, tabId: tab.id, since: now(), completed: 0, message: 'Авто: подготовка задания' });
   }
-  async function advance(state) {
+  async function advance(state, page) {
     const completed = state.completed + 1, next = followingTask(state);
-    if (!next) return save({ ...state, status: 'completed', completed, message: 'Авто завершено: все доступные задания пройдены.' });
+    if (!next) return save({ ...state, status: 'completed', completed, message: 'Авто завершено: решения отправлены. Результаты проверки ИИ доступны на сайте.' });
     const { settings = {} } = await store.get('settings');
     await store.set({ settings: { ...settings, ...next } });
     await stage(state, 'navigate', 'Авто: открываю следующее задание', { ...next, completed });
-    await navigate(state.tabId, ORIGIN + taskPath(next));
+    if (next.labId === state.labId && page?.nextEnabled && page.nextTaskButton)
+      await action(state.tabId, { name: 'next', labId: state.labId, taskId: state.taskId });
+    else await navigate(state.tabId, ORIGIN + taskPath(next));
   }
   async function tick(tabId) {
     let state = await get();
@@ -37,19 +39,19 @@ export function createAutopilot({ store, inspect, action, type, typing, stopTypi
       const elapsed = now() - state.since;
       if (state.phase === 'navigate') {
         if (elapsed > 45000) throw new Error('Следующее задание не загрузилось или недоступно.');
-        if (matches && page.ready && elapsed >= 2000) await stage(state, 'prepare', 'Авто: подготовка задания');
+        if (matches && page.ready) await stage(state, 'prepare', 'Авто: подготовка задания');
         return;
       }
       if (!matches) throw new Error('Открыта другая страница. Авто остановлено.');
       if (elapsed > (state.phase === 'grading' ? 15 * 60000 : 5 * 60000))
-        throw new Error(state.phase === 'grading' ? 'Проверка ИИ не завершилась за 15 минут. Отправка уже сохранена на сайте.' : 'Сайт долго не отвечает. Проверьте задание и запустите «Авто» снова.');
+        throw new Error(state.phase === 'grading' ? 'Кнопка следующего задания не появилась за 15 минут. Отправка уже сохранена на сайте.' : 'Сайт долго не отвечает. Проверьте задание и запустите «Авто» снова.');
       if (!page.ready) return;
       const doAction = (name, value) => action(tabId, { name, labId: state.labId, taskId: state.taskId, value });
       if (page.error) throw new Error(page.error);
       switch (state.phase) {
         case 'prepare': {
-          if (page.acceptedPage) return advance(state);
-          if (page.reviewPending || page.used) return stage(state, 'grading', 'Авто: ожидаю уже отправленную проверку ИИ', { reviewSeen: true });
+          if (page.acceptedPage || (page.nextEnabled && (page.reviewPending || page.used))) return advance(state, page);
+          if (page.reviewPending || page.used) return stage(state, 'grading', 'Авто: жду кнопку «Следующее задание»', { reviewSeen: true });
           if (!page.runEnabled) return;
           const started = await type(tabId, { labId: state.labId, taskId: state.taskId });
           await stage(state, 'typing', `Авто: печать · лаб. ${state.labId}, задание ${state.taskId}`, { runId: started.runId });
@@ -71,7 +73,7 @@ export function createAutopilot({ store, inspect, action, type, typing, stopTypi
         case 'waitRun': {
           const observed = state.runSeen || page.runBusy || page.inputVisible || page.runSignature !== state.baseline;
           if (observed && !state.runSeen) state = await save({ ...state, runSeen: true });
-          if (!observed || elapsed < 1000) return;
+          if (!observed) return;
           if (page.runError) throw new Error('Ошибка RUN. Решение не отправлено на проверку ИИ.');
           const lines = RUN_INPUTS[`${state.labId}:${state.taskId}`];
           if (page.inputVisible && !state.inputsSent && lines.length) {
@@ -91,16 +93,17 @@ export function createAutopilot({ store, inspect, action, type, typing, stopTypi
           break;
         }
         case 'submit':
-          if (page.reviewPending || page.used) return stage(state, 'grading', 'Авто: ожидаю проверку ИИ', { reviewSeen: true });
+          if (page.reviewPending || page.used) return stage(state, 'grading', 'Авто: жду кнопку «Следующее задание»', { reviewSeen: true });
           if (!page.submitEnabled) return;
-          await stage(state, 'grading', 'Авто: проверка ИИ', { reviewSeen: false });
+          await stage(state, 'grading', 'Авто: жду кнопку «Следующее задание»', { reviewSeen: false });
           await doAction('submit');
           break;
         case 'grading':
+          if (page.nextEnabled) return advance(state, page);
           if (page.reviewPending && !state.reviewSeen) state = await save({ ...state, reviewSeen: true });
           if (page.reviewRejected) throw new Error(`ИИ отклонил решение${page.grade !== null ? `: ${page.grade}/100` : ''}. Проверьте отзыв на сайте.`);
-          if (!page.reviewPending && (page.acceptedPage || (page.reviewAccepted && page.grade !== null)) && (state.reviewSeen || elapsed >= 2000))
-            await advance(state);
+          if (!page.reviewPending && (page.acceptedPage || (page.reviewAccepted && page.grade !== null)))
+            await advance(state, page);
           break;
       }
     } catch (error) { await stop(error.message || 'Ошибка автоматического режима.', 'error'); }

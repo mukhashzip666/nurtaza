@@ -2,7 +2,7 @@ import { test, expect, chromium } from '@playwright/test';
 import { readFile, mkdtemp, cp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
-import { RUN_INPUTS } from '../lib/run-inputs.js';
+import { RUN_INPUTS, followingTask, taskPath } from '../lib/run-inputs.js';
 const root = path.resolve(import.meta.dirname, '..');
 const origin = 'https://ai-institute.tailcb3c56.ts.net';
 let context, profile, extension, popup;
@@ -32,8 +32,9 @@ test.afterAll(async () => {
 });
 const saved = () => popup.evaluate(async () => (await chrome.storage.local.get('autoSession')).autoSession);
 const records = site => site.evaluate(() => JSON.parse(sessionStorage.getItem('records') || '[]'));
-function fixture(labId, taskId, { reject = false, slow = false } = {}) {
+function fixture(labId, taskId, { reject = false, slow = false, noNext = false } = {}) {
   const lines = RUN_INPUTS[`${labId}:${taskId}`];
+  const next = followingTask({ labId, taskId });
   return `<!doctype html><html><head><meta charset="utf-8"></head><body>
     <div class="cs-task-head"><h1>Задание ${taskId}</h1><p>CS${labId}-${String(taskId).padStart(2,'0')} · Программирование на C#</p></div>
     <div class="cs-code-area"><textarea id="editor" style="width:600px;height:250px"></textarea></div>
@@ -45,22 +46,25 @@ function fixture(labId, taskId, { reject = false, slow = false } = {}) {
     const submit = document.querySelector('.cs-submit-button');
     const status = document.querySelector('.cs-runtime b'), terminal = document.querySelector('.cs-terminal');
     const badge = document.querySelector('.cs-badge'), output = document.querySelector('#console');
-    function log(name, value) {
+    let codeReadyAt = 0, inputReadyAt = 0, submitReadyAt = 0;
+    document.querySelector('#editor').addEventListener('input', () => { codeReadyAt = Date.now(); });
+    function log(name, value, readyAt = 0) {
       const records = JSON.parse(sessionStorage.getItem('records') || '[]');
-      records.push({key, name, value}); sessionStorage.setItem('records', JSON.stringify(records));
+      records.push({key, name, value, latency: readyAt ? Date.now() - readyAt : null}); sessionStorage.setItem('records', JSON.stringify(records));
     }
-    function done() { status.textContent = 'Завершено'; terminal.className = 'cs-terminal success'; terminal.textContent = 'OK'; submit.disabled = false; }
+    function done() { status.textContent = 'Завершено'; terminal.className = 'cs-terminal success'; terminal.textContent = 'OK'; submitReadyAt = Date.now(); submit.disabled = false; }
     run.onclick = () => {
-      log('run', document.querySelector('#editor').value); submit.disabled = true;
+      log('run', document.querySelector('#editor').value, codeReadyAt); submit.disabled = true;
       status.textContent = 'В очереди'; terminal.textContent = ''; badge.className='cs-badge gray';
       setTimeout(() => {
         if (!lines.length) return done();
         status.textContent = 'Программа работает';
+        inputReadyAt = Date.now();
         output.innerHTML = '<div class="cs-console-input"><label>Введите значение для программы<textarea></textarea></label><div class="cs-console-actions"><button class="cs-primary" disabled>Ввести ↵</button></div></div>';
         const field = output.querySelector('textarea'), send = output.querySelector('button');
         field.addEventListener('input', () => { send.disabled = !field.value; });
         send.onclick = () => {
-          log('input', field.value);
+          log('input', field.value, inputReadyAt);
           if (field.value !== lines.join('\\n')) { terminal.className='cs-terminal error'; terminal.textContent='bad input'; return; }
           output.innerHTML = '<div class="cs-console-history"><pre></pre></div>';
           output.querySelector('pre').textContent = lines.map(x=>'> '+x).join('\\n');
@@ -69,8 +73,18 @@ function fixture(labId, taskId, { reject = false, slow = false } = {}) {
       }, 200);
     };
     submit.onclick = () => {
-      log('submit', null); submit.disabled = true; submit.textContent='На проверке'; badge.className='cs-badge amber'; badge.textContent='Проверяется ИИ';
+      log('submit', null, submitReadyAt); submit.disabled = true; submit.textContent='На проверке'; badge.className='cs-badge amber'; badge.textContent='Проверяется ИИ';
+      ${noNext ? '' : `
+      const next = document.createElement('button');
+      next.className = 'cs-next-task'; next.disabled = true;
+      next.textContent = '${next?.labId === labId ? 'Следующее задание' : 'Вернуться к лабораторной'}';
+      document.querySelector('.cs-task-head').append(next);
+      let nextReadyAt = 0;
+      next.onclick = () => { log('next', null, nextReadyAt); location.assign('${next ? taskPath(next) : `/labs/${labId}`}'); };
+      setTimeout(() => { nextReadyAt = Date.now(); next.disabled = false; }, 150);
+      `}
       setTimeout(() => {
+        log('grade', null);
         submit.textContent='Попытка использована';
         badge.className='cs-badge ${reject ? 'red' : 'green'}'; badge.textContent='${reject ? 'Отклонено' : 'Принято'}';
         document.querySelector('#grade').innerHTML = '<div class="cs-ai-grade"><div class="cs-ai-grade-head"><b>${reject ? '40' : '100'}/100</b></div></div>';
@@ -95,8 +109,8 @@ async function openTask(lab, task, options = {}) {
   await expect.poll(async () => (await saved())?.status).toBe('active');
   return site;
 }
-test('Авто: два задания с вводом, RUN, ИИ, переходом и завершением библиотеки', async () => {
-  const site = await openTask(5, 9);
+test('Следующее задание нажимается сразу после активации, до ответа ИИ', async () => {
+  const site = await openTask(5, 9, { slow: true });
   await expect.poll(async () => {
     const state = await saved();
     if (state.status === 'error') throw new Error(JSON.stringify(state));
@@ -106,15 +120,16 @@ test('Авто: два задания с вводом, RUN, ИИ, переход
   const log = await records(site);
   for (const task of [9, 10]) {
     const group = log.filter(x => x.key === `5:${task}`);
-    expect(group.map(x => x.name)).toEqual(['run','input','submit']);
+    expect(group.map(x => x.name)).toEqual(task === 9 ? ['run','input','submit','next'] : ['run','input','submit']);
     expect(group[0].value).toBe(await readFile(path.join(root, `solutions/lab5/task${task}.txt`),'utf8'));
     expect(group[1].value).toBe(RUN_INPUTS[`5:${task}`].join('\n'));
+    for (const step of group) expect(step.latency, `${step.key} ${step.name}`).toBeLessThan(750);
   }
   expect((await saved()).completed).toBe(2);
   await site.close();
 });
-test('Без ввода нет лишних данных; Стоп прекращает ожидание ИИ и переходы', async () => {
-  const site = await openTask(4, 13, { slow: true });
+test('Без ввода нет лишних данных; Стоп прекращает ожидание кнопки и переходы', async () => {
+  const site = await openTask(4, 13, { slow: true, noNext: true });
   await expect.poll(async () => (await records(site)).map(x=>x.name), { timeout: 25000 }).toEqual(['run','submit']);
   await site.locator('#codeflow-mini-host .stop').click();
   await expect.poll(async () => (await saved())?.status).toBe('stopped');
@@ -122,8 +137,8 @@ test('Без ввода нет лишних данных; Стоп прекра�
   expect((await records(site)).some(x=>x.name==='input')).toBe(false);
   await site.close();
 });
-test('Отказ ИИ останавливает процесс без повторной отправки и перехода', async () => {
-  const site = await openTask(5, 10, { reject: true });
+test('Отказ ИИ без доступного перехода останавливает процесс без повторной отправки', async () => {
+  const site = await openTask(5, 10, { reject: true, noNext: true });
   await expect.poll(async () => (await saved())?.status, { timeout: 25000 }).toBe('error');
   expect((await saved()).message).toContain('40/100');
   expect((await records(site)).filter(x=>x.name==='submit')).toHaveLength(1);

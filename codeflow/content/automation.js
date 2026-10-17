@@ -13,6 +13,7 @@
     const runtime = text('.cs-output .cs-runtime b');
     const submit = find('.cs-run-actions .cs-submit-button');
     const input = find('.cs-console-input textarea');
+    const next = find('.cs-task-head .cs-next-task');
     const grade = text('.cs-output .cs-ai-grade-head b');
     return {
       url: location.href, labId, taskId,
@@ -28,6 +29,8 @@
       inputEnabled: !!find('.cs-console-actions .cs-primary:not(:disabled)'),
       inputHistory: text('.cs-console-history pre'),
       submitEnabled: !!submit && !submit.disabled,
+      nextEnabled: !!next && !next.disabled,
+      nextTaskButton: !!next && /Следующее задание|Келесі тапсырма/i.test(next.textContent),
       used: /Попытка использована|Бір мүмкіндік пайдаланылды/i.test(submit?.textContent || ''),
       reviewPending: !!badge?.classList.contains('amber') || /На проверке|Тексерілуде/i.test(submit?.textContent || ''),
       reviewAccepted: !!badge?.classList.contains('green'),
@@ -40,7 +43,7 @@
     const state = inspect();
     if (!state.ready || state.labId !== labId || state.taskId !== taskId)
       throw new Error('Страница задания изменилась. Авто остановлено.');
-    const selectors = { run: '.cs-run-actions .cs-primary', submit: '.cs-run-actions .cs-submit-button', input: '.cs-console-actions .cs-primary' };
+    const selectors = { run: '.cs-run-actions .cs-primary', submit: '.cs-run-actions .cs-submit-button', input: '.cs-console-actions .cs-primary', next: '.cs-task-head .cs-next-task' };
     if (name === 'fill') {
       const input = find('.cs-console-input textarea');
       if (!input) throw new Error('Поле ввода программы не найдено.');
@@ -54,19 +57,59 @@
     if (!button || button.disabled) throw new Error('Кнопка сайта пока недоступна: ' + name);
     if (name === 'input' && state.inputValue !== value)
       throw new Error('Входные данные изменены. Авто остановлено.');
+    if (name === 'next' && !state.nextTaskButton)
+      throw new Error('Кнопка следующего задания изменилась.');
     button.click();
     return true;
   }
   globalThis.__codeflowAutoPage = { inspect, action };
-  // Content messages keep the MV3 controller responsive across worker restarts
-  // and full page navigations. Only the owning tab can advance its run.
-  let pending = false;
-  const timer = setInterval(async () => {
-    if (pending) return;
+  // Wake on actual site changes and completed steps instead of waiting for a
+  // polling interval. Keep one request in flight so a button is never clicked twice.
+  let active = false, pending = false, dirty = false, timer = null, invalid = false, stateChanged = false;
+  function schedule() {
+    if (!active || invalid) return;
+    dirty = true;
+    if (!pending && timer === null) timer = setTimeout(pump, 30);
+  }
+  async function pump() {
+    timer = null;
+    if (!active || invalid || pending) return;
     pending = true;
+    dirty = false;
     try { await chrome.runtime.sendMessage({ type: 'AUTO_TICK' }); }
     catch (error) {
-      if (/Extension context invalidated/i.test(error.message)) clearInterval(timer);
-    } finally { pending = false; }
-  }, 1000);
+      if (/Extension context invalidated/i.test(error.message)) {
+        invalid = true;
+        observer.disconnect();
+        clearInterval(fallback);
+      }
+    } finally {
+      pending = false;
+      if (dirty) schedule();
+    }
+  }
+  const observer = new MutationObserver((records) => {
+    if (records.some(({ target }) => {
+      const element = target.nodeType === Node.ELEMENT_NODE ? target : target.parentElement;
+      return !element?.closest('#codeflow-mini-host, .cs-code-area');
+    })) schedule();
+  });
+  observer.observe(document.documentElement, {
+    subtree: true, childList: true, characterData: true,
+    attributes: true, attributeFilter: ['disabled', 'aria-disabled', 'class', 'style', 'hidden'],
+  });
+  chrome.storage.onChanged.addListener((changes, area) => {
+    if (area !== 'local') return;
+    if (changes.autoSession) {
+      stateChanged = true;
+      active = changes.autoSession.newValue?.status === 'active';
+      schedule();
+    }
+    if (changes.typingSession && changes.typingSession.newValue?.status !== 'typing') schedule();
+  });
+  chrome.storage.local.get('autoSession').then(({ autoSession }) => {
+    if (!stateChanged) active = autoSession?.status === 'active';
+    schedule();
+  }).catch(() => {});
+  const fallback = setInterval(schedule, 1000);
 })();
